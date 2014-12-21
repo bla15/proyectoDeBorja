@@ -16,7 +16,7 @@ public logicaMiNave(){
 	miVelocidad = 0.0;
 	miDireccionActual = 0.0;
 	posX = 623;
-	posY = 100;
+	posY = 500;
 
 }
 

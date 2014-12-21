@@ -4,7 +4,7 @@ public class logicaPiloto {
 	int puntuacion;
 	String Nombre;
 	
-	public logicaPiloto(int puntuacion, String nombre){
+	public logicaPiloto(){
 		
 	}
 

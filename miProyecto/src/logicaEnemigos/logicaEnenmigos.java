@@ -1,5 +1,7 @@
 package logicaEnemigos;
 
+import java.util.Random;
+
 public class logicaEnenmigos {
 
 	//creamos valorres numericos para cada una de las variables que tendra el laser
@@ -7,6 +9,7 @@ public class logicaEnenmigos {
 	private double suDireccionActual;
 	private double posX;
 	private double posY;
+	private int giro = 0;
 
 	public logicaEnenmigos(){
 		//le damos una velocidad inicial al laser
@@ -40,6 +43,9 @@ public class logicaEnenmigos {
 		public double getPosY() {
 		return posY;
 		}
+		public int getGiro(){
+			return giro;
+		}
 		public void setPosY(double posY) {
 		this.posY = posY;
 		}
@@ -47,6 +53,11 @@ public class logicaEnenmigos {
 		public void setPosicion(double posX,double posY){
 		setPosY(posX);
 		setPosX(posY);
+		}
+		
+		public void setGiro(int giro2){
+			//hacer lo esto con giro set y get
+			this.giro=giro2;
 		}
 
 		//generamos el metodo para la aceleracion de los enemigos
@@ -59,10 +70,25 @@ public class logicaEnenmigos {
 		}
 
 		//tiempo por segundo de el movimeiento
-		public void mueve( double tiempoDeMovimiento) {
-		setPosX( posX + suVelocidad * Math.sin(suDireccionActual/180.0*Math.PI) * tiempoDeMovimiento );
-		// el negativo es porque en pantalla la Y crece hacia abajo y no hacia arriba
+		public void mueve( double tiempoDeMovimiento, double giro) {
+		if (giro > 0){
+			setPosX( posX + (suVelocidad*4) * Math.sin(suDireccionActual+giro/180.0*Math.PI) * tiempoDeMovimiento );
+		} else {
+			setPosX( posX + suVelocidad * Math.sin(suDireccionActual+giro/180.0*Math.PI) * tiempoDeMovimiento );
+		}
 		setPosY( posY + suVelocidad * -Math.cos(suDireccionActual/180.0*Math.PI) * tiempoDeMovimiento );
-
+		
+		// el negativo es porque en pantalla la Y crece hacia abajo y no hacia arriba
+		}
+		
+		//Metodo que permite cambiar de forma aleatoria el destino del enemigo 
+		//en cualquier momento
+		public void randomDestino(){
+			Random aleatorio = new Random();
+			int numero = aleatorio.nextInt(2);
+			if (numero == 0)
+				setGiro(90);
+			else 
+				setGiro(270);
 		}
 }

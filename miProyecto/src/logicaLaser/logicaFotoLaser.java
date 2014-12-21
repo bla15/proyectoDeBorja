@@ -1,6 +1,6 @@
 package logicaLaser;
 
-import java.awt.Color;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -14,7 +14,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.border.LineBorder;
+
 
 public class logicaFotoLaser extends JLabel {
 	//El tamaño de la nave

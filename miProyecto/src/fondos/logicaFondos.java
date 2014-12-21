@@ -17,6 +17,11 @@ public class logicaFondos extends JPanel {
 		imagenFondo= new ImageIcon(fondo).getImage();
 		//"/t/as.jpg"
 	}
+	
+	public void setCambio(String ruta){
+		fondo= this.getClass().getResource(ruta);
+		imagenFondo= new ImageIcon(fondo).getImage();
+	}
 
 	public void paintComponent(Graphics g){
 		g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);

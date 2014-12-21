@@ -52,14 +52,14 @@ public class eleccionfotoEnemigo extends JLabel {
 			
 		}
 		if(tipoEnemigo==2){
-			rutafoto="bin\\logicaEnemigos\\enemigoUno.png";
+			rutafoto="bin\\logicaEnemigos\\EnemigoDos.png";
 		}
 		if(tipoEnemigo==3){
-			rutafoto="bin\\logicaEnemigos\\enemigoUno.png";
+			rutafoto="bin\\logicaEnemigos\\EnemigoTres.png";
 			
 		}
 		if(tipoEnemigo==4){
-			rutafoto="bin\\logicaEnemigos\\enemigoUno.png";	
+			rutafoto="bin\\logicaEnemigos\\EnemigoCuatro.png";	
 		}
 		return rutafoto;
 	}
@@ -101,7 +101,4 @@ public class eleccionfotoEnemigo extends JLabel {
 		// Prepara rotación (siguientes operaciones se rotarán)
 		 g2.drawImage( imagenRedimensionada, 0, 0, TAMAÑO, TAMAÑO, null );
 	}
-
-
-
 }

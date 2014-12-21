@@ -1,7 +1,7 @@
 package logicaEnemigos;
 
 public class logicaEnemigosConjunta extends logicaEnenmigos{
-	eleccionfotoEnemigo fotoEnemigo;
+eleccionfotoEnemigo fotoEnemigo;
 	
 	public eleccionfotoEnemigo getFoto() {
 		return fotoEnemigo;
@@ -28,11 +28,14 @@ public class logicaEnemigosConjunta extends logicaEnenmigos{
 			super.setPosY(posY);	
 			fotoEnemigo.setLocation(fotoEnemigo.getX(),(int)posY);
 		}
-		public void mueve(double tiempoDeMovimiento) {
+		public void mueve(double tiempoDeMovimiento, double giro) {
 			// TODO Auto-generated method stub
-			super.mueve(tiempoDeMovimiento);
+			super.mueve(tiempoDeMovimiento,giro);
 		}
 		public logicaEnemigosConjunta esteEnemigo() {
 			return this;
+		}
+		public void setGiro(int giro){
+			super.setGiro(giro);
 		}
 }
