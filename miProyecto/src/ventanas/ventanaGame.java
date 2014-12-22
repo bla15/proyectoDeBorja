@@ -1,6 +1,8 @@
 package ventanas;
 
 
+import hilosEnemigos.corazonNivel1y2;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -42,6 +44,9 @@ public class ventanaGame implements KeyListener, ActionListener {
 	public static logicaFondos fondoControles;
 	public static int anchoPanelcontrol=1362;
 	public static int altoPanelControl=119;
+	
+	public static corazonNivel1y2 corazon;
+	public static int vida=8;
 
 
 	private JButton bSalir;
@@ -91,7 +96,11 @@ public class ventanaGame implements KeyListener, ActionListener {
 		naveConjunta.setPosY(500);
 		//instanciamos el cambio
 		change = new logicaCambio();
+		
+		//creamos los componentes de la ventana
 		initialize();
+		//metemos los corazones
+		corazon= new corazonNivel1y2(vida);
 		
 		//hilos
 		hiloMiNave miHiloNave = new hiloMiNave(); 
@@ -141,6 +150,8 @@ public class ventanaGame implements KeyListener, ActionListener {
 		panelCentral.add(fondoControles);
 		fondoControles.setLayout(null);
 		
+		//los corazones se gestionan ahora en una clase aparte
+		/*
 		logicaFondos corazon1 = new logicaFondos("/fondos/CorazonVivo.png");
 		corazon1.setBounds(27, 10, 39, 45);
 		fondoControles.add(corazon1);
@@ -156,6 +167,8 @@ public class ventanaGame implements KeyListener, ActionListener {
 		logicaFondos corazon4 = new logicaFondos("/fondos/CorazonVivo.png");
 		corazon4.setBounds(165, 10, 39, 45);
 		fondoControles.add(corazon4);
+		
+		*/
 		
 		JPanel panelCorazones = new JPanel();
 		panelCorazones.setBorder(new LineBorder(Color.BLUE, 2));

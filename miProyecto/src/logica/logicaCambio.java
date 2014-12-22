@@ -39,7 +39,7 @@ public class logicaCambio {
 			while(true){
 				try {
 					//si pasa 30 segundos hace el primer cambio de mapa
-					if((int)System.currentTimeMillis()-tiempoAlEmpezar>3000){
+					if(((int)System.currentTimeMillis()-tiempoAlEmpezar>3000)&&(ventanaGame.vida>0)){
 						//acabamos con los enemigos uno
 						enemigoUno.funcionar=false;
 						if((enemigosFirst.getTamañoArray()==0)&&(paso1==true)){
@@ -54,7 +54,7 @@ public class logicaCambio {
 							
 						}
 						//ACABAMOS CON LOS ENEMIGOS DOS
-						if(((int)System.currentTimeMillis()-tiempoAlEmpezar>3000)&&(enemigosFirst.getTamañoArray()==0)){
+						if(((int)System.currentTimeMillis()-tiempoAlEmpezar>3000)&&(enemigosFirst.getTamañoArray()==0)&&(ventanaGame.vida>0)){
 							enemigoDos.funcionar=false;
 							
 							if((enemigoTwo.getTamañoArray()==0)&&(paso2==true)){

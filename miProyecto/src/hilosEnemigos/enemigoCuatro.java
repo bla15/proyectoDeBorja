@@ -6,11 +6,11 @@ package hilosEnemigos;
 
 import java.awt.geom.Area;
 import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+
 import logicaEnemigos.logicaEnemigosConjunta;
 import ventanas.ventanaGame;
-
-
-
 
 
 public class enemigoCuatro {
@@ -22,12 +22,9 @@ public class enemigoCuatro {
 	ArrayList<Long> tiempo = new ArrayList<Long>();
 	Long tiempoAccion;
 	
-	//los corazones
-		//corazonNivel3y4 corazon;
+
 	
-	int vida=4;
 	int tipoEnemigo=4;
-	
 
 	public static boolean funcionar=true;
 	
@@ -53,7 +50,7 @@ public class hiloCreacionEnemigos extends Thread{
 		public void run() {
 			System.out.println( funcionar);
 			
-			while(funcionar&&vida>0){
+			while(funcionar&&ventanaGame.vida>0){
 				unEnemigo= new logicaEnemigosConjunta(tipoEnemigo);
 				//posicon aleatoria en el eje de las x (sin que toque los bordes para que se vea bien la imagen
 				unEnemigo.setPosX((int)(Math.random()*((limiteIzquierdo)-limiteDerecho+1)+limiteDerecho));
@@ -87,7 +84,7 @@ public class hiloMovimiento extends Thread{
 
 	int i;
 	public void run(){
-		while(vida>0){
+		while(ventanaGame.vida>0){
 			
 			
 			for(i=0;i<tiempo.size();i++){
@@ -124,7 +121,21 @@ public class hiloMovimiento extends Thread{
 					misEnemigos.remove(i);
 					tiempo.remove(i);
 					ventanaGame.paneljuego.repaint();
-					vida-=1;
+					ventanaGame.vida-=1;
+					if(ventanaGame.vida<=0){
+						ventanaGame.corazon.setVidas(ventanaGame.vida);
+						ventanaGame.corazon.pares();
+						JOptionPane.showMessageDialog(null, "Te has quedado sin vida", "Error", JOptionPane.ERROR_MESSAGE);
+						ventanaGame.funcionar=false;
+
+					}
+					if ((ventanaGame.vida % 2) != 0) {
+						ventanaGame.corazon.setVidas(ventanaGame.vida);
+						ventanaGame.corazon.impares();
+					}else if ((ventanaGame.vida % 2) == 0) {
+						ventanaGame.corazon.setVidas(ventanaGame.vida);
+						ventanaGame.corazon.pares();
+					}
 				}
 				
 			}
@@ -145,7 +156,7 @@ public class hiloChoques extends Thread{
 	int i;
 	int z;
 	public void run(){
-		while(vida>0){
+		while(ventanaGame.vida>0){
 			for(z=0;z<ventanaGame.misLasers.size();z++){
 				for(i=0;i<misEnemigos.size();i++){
 
