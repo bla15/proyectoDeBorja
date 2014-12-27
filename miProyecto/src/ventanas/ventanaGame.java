@@ -28,12 +28,15 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.SwingConstants;
 
 
 
 public class ventanaGame implements KeyListener, ActionListener {
 
-	public JFrame frame;
+	public static JFrame frame;
 	public static ventanaGame window;
 	
 	public static logicaFondos paneljuego;
@@ -67,6 +70,9 @@ public class ventanaGame implements KeyListener, ActionListener {
 	//boolean para que funcionen los hilos
 	public static boolean funcionar= true;
 	protected int i;
+	
+	//puntuacion
+	public static JLabel puntuacionVisible;
 
 
 	/**
@@ -185,9 +191,26 @@ public class ventanaGame implements KeyListener, ActionListener {
 		bPause.setBounds(1274, 54, 62, 65);
 		fondoControles.add(bPause);
 		bPause.setIcon(new ImageIcon(ventanaGame.class.getResource("/fotosBotones/pause.png")));
+		
+		JPanel panelPuntuacion = new JPanel();
+		panelPuntuacion.setBorder(new LineBorder(Color.GREEN));
+		panelPuntuacion.setOpaque( false );
+		panelPuntuacion.setBounds(235, 2, 106, 60);
+		fondoControles.add(panelPuntuacion);
+		panelPuntuacion.setLayout(null);
+		
+		puntuacionVisible = new JLabel();
+		puntuacionVisible.setForeground(Color.GREEN);
+		puntuacionVisible.setHorizontalAlignment(SwingConstants.CENTER);
+		puntuacionVisible.setBounds(251, 2, 90, 48);
+		fondoControles.add(puntuacionVisible);
+		puntuacionVisible.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 40));
+		puntuacionVisible.setText(Integer.toString(ventanaStart.contenedor.getPuntuacion()));
 		bPause.addActionListener(this);
 		bSalir.addActionListener(this);
 		
+
+	
 		
 	}
 
@@ -328,6 +351,8 @@ public class ventanaGame implements KeyListener, ActionListener {
 							unLaser.setPosY(naveConjunta.getPosY());
 							unLaser.setMiVelocidad(300);
 							paneljuego.add(unLaser.getFotoLaser());
+							
+							
 
 							//el giro del laser
 							if(naveConjunta.getMiVelocidad()>100){

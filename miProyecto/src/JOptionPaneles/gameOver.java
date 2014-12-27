@@ -8,6 +8,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JRootPane;
 
 import java.awt.Color;
@@ -15,6 +16,13 @@ import java.awt.Color;
 import javax.swing.JLabel;
 
 
+
+
+
+
+import ventanas.ventanaGame;
+import ventanas.ventanaRegistro;
+import ventanas.ventanaStart;
 import fondos.logicaFondos;
 
 import java.awt.Font;
@@ -23,17 +31,24 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
+import javax.swing.SwingConstants;
+
 public class gameOver implements KeyListener, ActionListener{
 	//el objeto de esta clase
 	public static gameOver window;
 	
 	//frame de la ventana
-	public JFrame frame;
+	public JDialog frame;
 	
 	
 	//los botones
 	JButton botonNext;
 	JButton botonAdelante;
+	private JPanel panelPuntuaciones;
+	private JLabel enunciadoPuntuaciones;
+	private JLabel puntuaciones;
 	
 
 	/**
@@ -63,9 +78,9 @@ public class gameOver implements KeyListener, ActionListener{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
+		frame = new JDialog(ventanaGame.frame);
 		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setUndecorated(true);
 		frame.getRootPane().setWindowDecorationStyle(JRootPane.NONE);
 		frame.setSize(600,350); 
@@ -98,6 +113,27 @@ public class gameOver implements KeyListener, ActionListener{
 		botonAdelante.setBounds(359, 231, 58, 59);
 		botonAdelante.addActionListener(this);
 		panelInicioFondo.add(botonAdelante);
+		
+		panelPuntuaciones = new JPanel();
+		panelPuntuaciones.setBorder(new LineBorder(Color.GREEN));
+		panelPuntuaciones.setBounds(32, 58, 248, 74);
+		panelPuntuaciones.setOpaque( false );
+		panelInicioFondo.add(panelPuntuaciones);
+		panelPuntuaciones.setLayout(null);
+		
+		enunciadoPuntuaciones = new JLabel("Tu puntuacion es:  ");
+		enunciadoPuntuaciones.setForeground(Color.GREEN);
+		enunciadoPuntuaciones.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		enunciadoPuntuaciones.setBounds(10, 22, 133, 26);
+		panelPuntuaciones.add(enunciadoPuntuaciones);
+		
+		puntuaciones = new JLabel();
+		puntuaciones.setForeground(Color.GREEN);
+		puntuaciones.setFont(new Font("Stencil", Font.BOLD | Font.ITALIC, 20));
+		puntuaciones.setHorizontalAlignment(SwingConstants.RIGHT);
+		puntuaciones.setBounds(142, 11, 96, 52);
+		puntuaciones.setText(Integer.toString(ventanaStart.contenedor.getPuntuacion()));
+		panelPuntuaciones.add(puntuaciones);
 		
 		
 	}

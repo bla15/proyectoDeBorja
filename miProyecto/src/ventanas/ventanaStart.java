@@ -33,7 +33,7 @@ public class ventanaStart  implements KeyListener, ActionListener{
 	static ventanaStart window;
 	
 	static LinkedList<logicaPiloto>registro=new LinkedList<logicaPiloto>();
-	static logicaPiloto contenedor;
+	static public logicaPiloto contenedor;
 	
 	//tamaño del frame por defecto
 	int anchoFrame=450;

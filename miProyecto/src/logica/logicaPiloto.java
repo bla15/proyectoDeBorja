@@ -1,7 +1,7 @@
 package logica;
 
 public class logicaPiloto {
-	int puntuacion;
+	int puntuacion=0;
 	String Nombre;
 	
 	public logicaPiloto(){

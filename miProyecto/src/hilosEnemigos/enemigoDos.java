@@ -4,24 +4,33 @@ package hilosEnemigos;
 
 import hilosEnemigos.enemigoUno.hiloChoques;
 
+import java.awt.EventQueue;
 import java.awt.geom.Area;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import JOptionPaneles.gameOver;
 import ventanas.ventanaGame;
+import ventanas.ventanaStart;
 import logicaEnemigos.logicaEnemigosConjunta;
 
 
 public class enemigoDos {
+	//limites
 	int limiteDerecho=ventanaGame.paneljuego.WIDTH;
 	int limiteIzquierdo=ventanaGame.anchoPanelJuego-50;
+	
+	//logicas
 	public  logicaEnemigosConjunta unEnemigo;
 	ArrayList<logicaEnemigosConjunta> misEnemigos = new ArrayList<logicaEnemigosConjunta>();
-	
-
 	int tipoEnemigo=2;
+
+	//bandera de los hilos
 	public static boolean funcionar=true;
+
+	//puntuacion
+	int puntuacion = 0;
 
 	public enemigoDos() {
 		//lanzams hilo de creacion de enemigos
@@ -99,7 +108,23 @@ public class enemigoDos {
 						if(ventanaGame.vida<=0){
 							ventanaGame.corazon.setVidas(ventanaGame.vida);
 							ventanaGame.corazon.pares();
-							JOptionPane.showMessageDialog(null, "Te has quedado sin vida", "Error", JOptionPane.ERROR_MESSAGE);
+							
+							//sacamos el JDialog de fin de partida
+							EventQueue.invokeLater(new Runnable() {
+								public void run() {
+									try {
+										  	
+										gameOver.window = new gameOver();
+										gameOver.window.frame.setVisible(true);
+										
+										
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
+								}
+							});
+							
+							//paramos los hilos
 							ventanaGame.funcionar=false;
 
 						}
@@ -151,6 +176,11 @@ public class enemigoDos {
 						if(areaEnemigo.intersects(areaLaser.getBounds2D())){
 							ventanaGame.paneljuego.remove(misEnemigos.get(i).getFotoEnemigo());
 							misEnemigos.remove(i);
+							
+							//aumentamos la puntuacion
+							ventanaStart.contenedor.setPuntuacion(ventanaStart.contenedor.getPuntuacion()+1);
+							ventanaGame.puntuacionVisible.setText(Integer.toString(ventanaStart.contenedor.getPuntuacion()));
+							ventanaGame.fondoControles.repaint();
 						}	
 					}
 				}

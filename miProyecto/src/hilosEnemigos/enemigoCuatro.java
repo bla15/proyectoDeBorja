@@ -4,30 +4,36 @@ package hilosEnemigos;
 
 
 
+import java.awt.EventQueue;
 import java.awt.geom.Area;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import JOptionPaneles.gameOver;
 import logicaEnemigos.logicaEnemigosConjunta;
 import ventanas.ventanaGame;
+import ventanas.ventanaStart;
 
 
 public class enemigoCuatro {
+	//limites
 	int limiteDerecho=ventanaGame.paneljuego.WIDTH;
 	int limiteIzquierdo=ventanaGame.anchoPanelJuego-50;
 
+	//logicas
 	public  logicaEnemigosConjunta unEnemigo;
 	ArrayList<logicaEnemigosConjunta> misEnemigos = new ArrayList<logicaEnemigosConjunta>();
 	ArrayList<Long> tiempo = new ArrayList<Long>();
 	Long tiempoAccion;
-	
-
-	
 	int tipoEnemigo=4;
 
+	//bandera de los hilos
 	public static boolean funcionar=true;
-	
+
+	//puntuacion
+	int puntuacion = 0;
+
 	public enemigoCuatro(){
 		//lanzams hilo de creacion de enemigos
 		hiloCreacionEnemigos creacion = new hiloCreacionEnemigos(); 
@@ -125,7 +131,22 @@ public class hiloMovimiento extends Thread{
 					if(ventanaGame.vida<=0){
 						ventanaGame.corazon.setVidas(ventanaGame.vida);
 						ventanaGame.corazon.pares();
-						JOptionPane.showMessageDialog(null, "Te has quedado sin vida", "Error", JOptionPane.ERROR_MESSAGE);
+						//sacamos el JDialog de fin de partida
+						EventQueue.invokeLater(new Runnable() {
+							public void run() {
+								try {
+									  	
+									gameOver.window = new gameOver();
+									gameOver.window.frame.setVisible(true);
+									
+									
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+							}
+						});
+						
+						//paramos los hilos
 						ventanaGame.funcionar=false;
 
 					}
@@ -166,6 +187,11 @@ public class hiloChoques extends Thread{
 						ventanaGame.paneljuego.remove(misEnemigos.get(i).getFotoEnemigo());
 						misEnemigos.remove(i);
 						tiempo.remove(i);
+						
+						//aumentamos la puntuacion
+						ventanaStart.contenedor.setPuntuacion(ventanaStart.contenedor.getPuntuacion()+2);
+						ventanaGame.puntuacionVisible.setText(Integer.toString(ventanaStart.contenedor.getPuntuacion()));
+						ventanaGame.fondoControles.repaint();
 
 					}
 					
