@@ -4,14 +4,19 @@ package ventanas;
 import hilosEnemigos.corazonNivel1y2;
 
 import java.awt.EventQueue;
+import java.awt.Panel;
 
 import javax.swing.JFrame;
 
 import logica.logicaCambio;
+import logica.logicaCoheteDerecho;
+import logica.logicaCoheteIzquierdo;
 import logica.logicaCojuntaMiNave;
+import logica.logicaEsfera;
 import logica.logicaFotoMiNave;
 import logicaLaser.laserConjunto;
 import logicaLaser.logicaFotoLaser;
+import logicaTitulos.logicaMapa;
 import fondos.logicaFondos;
 
 import javax.swing.JPanel;
@@ -29,7 +34,9 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.SwingConstants;
 
 
@@ -59,6 +66,12 @@ public class ventanaGame implements KeyListener, ActionListener {
 	static logicaCojuntaMiNave naveConjunta;
 	static laserConjunto unLaser;
 	boolean teclasMovimientoNave [] = new boolean[3];
+	//cohetes
+	logicaCoheteDerecho coheteDerecho;
+	logicaCoheteIzquierdo coheteIzquierdo;
+	//esfera
+	logicaEsfera esfera;
+	
 	//mis cosas de lo laser
 	//arrayList de los lasers que voy disparando
 	public static ArrayList<laserConjunto> misLasers = new ArrayList<laserConjunto>();
@@ -96,10 +109,22 @@ public class ventanaGame implements KeyListener, ActionListener {
 	 */
 	public ventanaGame() {
 
-
+		//posicion de la nave
 		naveConjunta = new logicaCojuntaMiNave();
 		naveConjunta.setPosX(623);
 		naveConjunta.setPosY(500);
+		//cohetes
+		coheteDerecho = new logicaCoheteDerecho();
+		coheteDerecho.setLocation(680, 560);
+		
+		coheteIzquierdo= new logicaCoheteIzquierdo();
+		coheteIzquierdo.setLocation(570, 560);
+		
+		//esfera
+		esfera= new logicaEsfera();
+		esfera.setVisible(false);
+		esfera.setLocation(600, 480);
+		
 		//instanciamos el cambio
 		change = new logicaCambio();
 		
@@ -150,6 +175,12 @@ public class ventanaGame implements KeyListener, ActionListener {
 		panelCentral.add(paneljuego);
 		
 		paneljuego.add(naveConjunta.getFotoNave());
+		
+		paneljuego.add(coheteDerecho);
+		coheteDerecho.setVisible(false);
+		paneljuego.add(coheteIzquierdo);
+		
+		paneljuego.add(esfera);
 		
 		fondoControles  = new logicaFondos("/fondos/panel.jpg");
 		fondoControles.setBounds(0, 587, anchoPanelcontrol, altoPanelControl);
@@ -259,6 +290,7 @@ public class ventanaGame implements KeyListener, ActionListener {
 
 				if(e.getKeyCode()==KeyEvent.VK_RIGHT){
 					teclasMovimientoNave[1]=false;
+					
 				}
 
 				if(e.getKeyCode()==KeyEvent.VK_SPACE)
@@ -274,7 +306,11 @@ public class ventanaGame implements KeyListener, ActionListener {
 
 	//hilo que gestiona mi nave
 	public class hiloMiNave extends Thread{
+		long tiempoEsfera;
+
+		
 		public void run(){
+
 			while(funcionar){
 				
 				naveConjunta.mueve(0.040);
@@ -282,6 +318,7 @@ public class ventanaGame implements KeyListener, ActionListener {
 				if(teclasMovimientoNave[0]==true){
 					if(naveConjunta.getMiVelocidad()==0){
 						naveConjunta.acelera(-100);
+						
 						
 					}
 					else if(naveConjunta.getMiVelocidad()<-400){
@@ -293,9 +330,14 @@ public class ventanaGame implements KeyListener, ActionListener {
 					else
 						naveConjunta.acelera(-35);
 
+					//ponemos los cohetes en posicion
+					coheteDerecho.setVisible(true);
 					
 						
+				}else{
+					coheteDerecho.setVisible(false);
 				}
+				
 	
 				if(teclasMovimientoNave[1]==true){
 					if(naveConjunta.getMiVelocidad()==0){
@@ -309,7 +351,16 @@ public class ventanaGame implements KeyListener, ActionListener {
 					}
 					else
 						naveConjunta.acelera(35);
+					
+					//ponemos los cohetes en posicion
+					coheteIzquierdo.setVisible(true);
+					
+					
+				}else{
+					coheteIzquierdo.setVisible(false);
 				}
+				
+				
 				
 				if(teclasMovimientoNave[2]==true){
 					
@@ -319,18 +370,33 @@ public class ventanaGame implements KeyListener, ActionListener {
 					//tiempo=0;;
 				}
 				
-			
+				if (naveConjunta.getPosX() < paneljuego.WIDTH -logicaFotoMiNave.TAMAÑO/2 ) {
+					naveConjunta.setPosX(naveConjunta.getPosX()+10);
+					naveConjunta.setMiVelocidad(-naveConjunta.getMiVelocidad());
+					tiempoEsfera=System.currentTimeMillis();
+					tiempoEsfera=System.currentTimeMillis();
+					esfera.setVisible(true);		
+				}
+				
+				if (naveConjunta.getPosX()>paneljuego.getWidth()-logicaFotoMiNave.TAMAÑO/2  ) {
+					naveConjunta.setPosX(naveConjunta.getPosX()-10);
+					naveConjunta.setMiVelocidad(-naveConjunta.getMiVelocidad());
+					tiempoEsfera=System.currentTimeMillis();
+					esfera.setVisible(true);
+				}
+				//hacemos invisible a esfera
+				if(System.currentTimeMillis()-tiempoEsfera>700){
+					esfera.setVisible(false);
+				}
+				
+				//las posiciones de los componentes sigen la nave
+				coheteIzquierdo.setLocation((int)naveConjunta.getPosX()-53, (int)naveConjunta.getPosY()+60);
+				coheteDerecho.setLocation((int)naveConjunta.getPosX()+57, (int)naveConjunta.getPosY()+60);
+				esfera.setLocation((int)naveConjunta.getPosX()-23,480);
+				
 
 				try {
-					if (naveConjunta.getPosX() < paneljuego.WIDTH -logicaFotoMiNave.TAMAÑO/2 ) {
-						naveConjunta.setPosX(naveConjunta.getPosX()+10);
-						naveConjunta.setMiVelocidad(-naveConjunta.getMiVelocidad());
-					}
-					if (naveConjunta.getPosX()>paneljuego.getWidth()-logicaFotoMiNave.TAMAÑO/2  ) {
-						naveConjunta.setPosX(naveConjunta.getPosX()-10);
-						naveConjunta.setMiVelocidad(-naveConjunta.getMiVelocidad());
-					}
-
+					
 					Thread.sleep(40);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block

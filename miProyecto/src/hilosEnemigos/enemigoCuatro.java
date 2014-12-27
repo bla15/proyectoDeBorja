@@ -54,7 +54,6 @@ public class enemigoCuatro {
 public class hiloCreacionEnemigos extends Thread{
 		
 		public void run() {
-			System.out.println( funcionar);
 			
 			while(funcionar&&ventanaGame.vida>0){
 				unEnemigo= new logicaEnemigosConjunta(tipoEnemigo);

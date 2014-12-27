@@ -23,7 +23,6 @@ public class logicaCambio {
 	public logicaCambio(){
 		//le metemos el tiempo
 		tiempoAlEmpezar=(int) System.currentTimeMillis();
-		System.out.println(tiempoAlEmpezar);
 		hiloCambios miHiloCambios = new hiloCambios(); 
 		miHiloCambios.start();
 		

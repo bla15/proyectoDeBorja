@@ -143,10 +143,8 @@ public class enemigoDos {
 					if(misEnemigos.size()!=0){
 						if(misEnemigos.get(i).getPosX() < limiteDerecho){
 							misEnemigos.get(i).setGiro(270);
-							System.out.println("izq");
 						} else if (misEnemigos.get(i).getPosX() > limiteIzquierdo){
 							misEnemigos.get(i).setGiro(90);
-							System.out.println("der");
 						}
 					}
 				}

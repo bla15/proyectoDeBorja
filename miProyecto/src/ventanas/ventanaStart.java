@@ -115,7 +115,6 @@ public class ventanaStart  implements KeyListener, ActionListener{
 				try {
 					window = new ventanaStart();
 					window.frame.setVisible(true);
-					System.out.println(window.frame.getWidth());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -239,7 +238,6 @@ public class ventanaStart  implements KeyListener, ActionListener{
 		bOptions.setIcon(new ImageIcon(ventanaStart.class.getResource("/fotosBotones/opciones.png")));
 		bOptions.setBounds(xOpciones, yOpciones, anchoBotonOptiocnes, altoBotonOpciones);
 		panelInicioFondo.add(bOptions);
-		
 		
 		
 	}
