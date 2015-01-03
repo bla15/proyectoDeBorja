@@ -39,6 +39,8 @@ import java.awt.Font;
 
 import javax.swing.SwingConstants;
 
+import JOptionPaneles.resumen;
+
 
 
 public class ventanaGame implements KeyListener, ActionListener {
@@ -108,6 +110,9 @@ public class ventanaGame implements KeyListener, ActionListener {
 	 * Create the application.
 	 */
 	public ventanaGame() {
+		//restablecer valores
+		vida=8;
+		funcionar=true;
 
 		//posicion de la nave
 		naveConjunta = new logicaCojuntaMiNave();
@@ -150,6 +155,9 @@ public class ventanaGame implements KeyListener, ActionListener {
 				paneljuego.requestFocus();
 			}
 		});
+		
+		//iniciamos el contador de tiempo de la partida
+		ventanaStart.contenedor.setTiempoPartida(System.currentTimeMillis());
 
 	}
 
@@ -177,7 +185,7 @@ public class ventanaGame implements KeyListener, ActionListener {
 		paneljuego.add(naveConjunta.getFotoNave());
 		
 		paneljuego.add(coheteDerecho);
-		coheteDerecho.setVisible(false);
+		
 		paneljuego.add(coheteIzquierdo);
 		
 		paneljuego.add(esfera);
@@ -255,7 +263,20 @@ public class ventanaGame implements KeyListener, ActionListener {
 		}
 		if(e.getSource()==bPause){
 
-			
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+  	
+						resumen.window = new resumen();
+						resumen.window.frame.setVisible(true);
+						
+						
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+			this.window.frame.dispose();
 		}
 
 	}
@@ -375,7 +396,9 @@ public class ventanaGame implements KeyListener, ActionListener {
 					naveConjunta.setMiVelocidad(-naveConjunta.getMiVelocidad());
 					tiempoEsfera=System.currentTimeMillis();
 					tiempoEsfera=System.currentTimeMillis();
-					esfera.setVisible(true);		
+					esfera.setVisible(true);
+					//aumentamos el contanador
+					ventanaStart.contenedor.setRebotesIzquierdos(ventanaStart.contenedor.getRebotesIzquierdos()+1);
 				}
 				
 				if (naveConjunta.getPosX()>paneljuego.getWidth()-logicaFotoMiNave.TAMAÑO/2  ) {
@@ -383,6 +406,8 @@ public class ventanaGame implements KeyListener, ActionListener {
 					naveConjunta.setMiVelocidad(-naveConjunta.getMiVelocidad());
 					tiempoEsfera=System.currentTimeMillis();
 					esfera.setVisible(true);
+					//aumentamos el contanador
+					ventanaStart.contenedor.setRebotesDerechos(ventanaStart.contenedor.getRebotesDerechos()+1);
 				}
 				//hacemos invisible a esfera
 				if(System.currentTimeMillis()-tiempoEsfera>700){
@@ -417,8 +442,8 @@ public class ventanaGame implements KeyListener, ActionListener {
 							unLaser.setPosY(naveConjunta.getPosY());
 							unLaser.setMiVelocidad(300);
 							paneljuego.add(unLaser.getFotoLaser());
-							
-							
+							//aumentamos contador de los laseres
+							ventanaStart.contenedor.setMisilesDisparados(ventanaStart.contenedor.getMisilesDisparados()+1);
 
 							//el giro del laser
 							if(naveConjunta.getMiVelocidad()>100){

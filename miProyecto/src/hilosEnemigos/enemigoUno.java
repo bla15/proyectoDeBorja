@@ -28,10 +28,15 @@ public class enemigoUno {
 	
 	//bandera de los hilos
 	public static boolean funcionar=true;
+	public static boolean pasoMapa=true;
 	
 
 	
 	public enemigoUno(){
+		//lave de los hilos
+		funcionar=true;
+		pasoMapa=true;
+		
 		//lanzams hilo de creacion de enemigos
 		hiloCreacionEnemigos creacion = new hiloCreacionEnemigos(); 
 		creacion.start();
@@ -55,7 +60,7 @@ public class enemigoUno {
 		
 		public void run() {
 			
-			while(funcionar&&ventanaGame.vida>0){
+			while(funcionar&&ventanaGame.vida>0&&pasoMapa){
 				unEnemigo= new logicaEnemigosConjunta(tipoEnemigo);
 				//posicon aleatoria en el eje de las x (sin que toque los bordes para que se vea bien la imagen
 				unEnemigo.setPosX((int)(Math.random()*((limiteIzquierdo)-limiteDerecho+1)+limiteDerecho));
@@ -65,8 +70,12 @@ public class enemigoUno {
 				misEnemigos.add(unEnemigo);
 
 				//lo sacmos en el panel de juego
+				if(unEnemigo!=null){
 				ventanaGame.paneljuego.add(unEnemigo.getFotoEnemigo());
 				ventanaGame.paneljuego.repaint();
+				}else{
+					System.out.println("no hay aun enemigo");
+				}
 				
 				try {
 					//cada cuanto tiempo los va creando
@@ -86,7 +95,7 @@ public class enemigoUno {
 	public class hiloMovimiento extends Thread{
 		int i;
 		public void run(){
-			while(ventanaGame.vida>0){
+			while(ventanaGame.vida>0&&(funcionar)){
 
 				//les damos movimiento
 				for(i=0;i<misEnemigos.size();i++){
@@ -102,6 +111,7 @@ public class enemigoUno {
 						ventanaGame.paneljuego.remove(misEnemigos.get(i).getFotoEnemigo());
 						misEnemigos.remove(i);
 						ventanaGame.vida-=1;
+						ventanaStart.contenedor.setEnemigoPasa1(ventanaStart.contenedor.getEnemigoPasa1()+1);
 						//vemos que hacer con los corazones
 						if(ventanaGame.vida<=0){
 							ventanaGame.corazon.setVidas(ventanaGame.vida);
@@ -152,7 +162,7 @@ public class enemigoUno {
 		int i;
 		int z;
 		public void run(){
-			while(ventanaGame.vida>0){
+			while(ventanaGame.vida>0&&(funcionar)){
 				for(z=0;z<ventanaGame.misLasers.size();z++){
 					for(i=0;i<misEnemigos.size();i++){
 
@@ -161,6 +171,8 @@ public class enemigoUno {
 						if(areaEnemigo.intersects(areaLaser.getBounds2D())){
 							ventanaGame.paneljuego.remove(misEnemigos.get(i).getFotoEnemigo());
 							misEnemigos.remove(i);
+							//contamos enemigos muertos
+							ventanaStart.contenedor.setEnemigosNMuertos1(ventanaStart.contenedor.getEnemigosNMuertos1()+1);
 							
 							//aumentamos la puntuacion
 							ventanaStart.contenedor.setPuntuacion(ventanaStart.contenedor.getPuntuacion()+1);

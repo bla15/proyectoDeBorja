@@ -10,7 +10,7 @@ import ventanas.ventanaGame;
 public class logicaCambio {
 	//varaible que usaremos para determinar el tiempo pasado desde que iniciamos el juego
 	int tiempoAlEmpezar;
-	boolean funcionar= true;
+	public static boolean funcionar= true;
 	
 	boolean paso1=true;
 	boolean paso2=true;
@@ -21,6 +21,11 @@ public class logicaCambio {
 	enemigoCuatro enemigosFourth;
 	
 	public logicaCambio(){
+		//llaves de los hilos 
+		funcionar=true;
+		paso1=true;
+		paso2=true;
+		paso3=true;
 		//le metemos el tiempo
 		tiempoAlEmpezar=(int) System.currentTimeMillis();
 		hiloCambios miHiloCambios = new hiloCambios(); 
@@ -35,12 +40,12 @@ public class logicaCambio {
 
 	public class hiloCambios extends Thread{
 		public void run(){
-			while(true){
+			while(funcionar){
 				try {
 					//si pasa 30 segundos hace el primer cambio de mapa
 					if(((int)System.currentTimeMillis()-tiempoAlEmpezar>3000)&&(ventanaGame.vida>0)){
 						//acabamos con los enemigos uno
-						enemigoUno.funcionar=false;
+						enemigoUno.pasoMapa=false;
 						if((enemigosFirst.getTamañoArray()==0)&&(paso1==true)){
 							//EMPEZAMOS CON LOS DOS
 							paso1=false;
@@ -54,7 +59,7 @@ public class logicaCambio {
 						}
 						//ACABAMOS CON LOS ENEMIGOS DOS
 						if(((int)System.currentTimeMillis()-tiempoAlEmpezar>3000)&&(enemigosFirst.getTamañoArray()==0)&&(ventanaGame.vida>0)){
-							enemigoDos.funcionar=false;
+							enemigoDos.pasoMapa=false;
 							
 							if((enemigoTwo.getTamañoArray()==0)&&(paso2==true)){
 								//EMPEZAMOS CON LOS TRES

@@ -26,11 +26,11 @@ import presentaciones.presentacion0;
 
 public class ventanaStart  implements KeyListener, ActionListener{
 
-	JFrame frame;
+	public static JFrame frame;
 	private logicaFondos panelInicioFondo;
 	private JButton botonStart;
 
-	static ventanaStart window;
+	public static ventanaStart window;
 	
 	static LinkedList<logicaPiloto>registro=new LinkedList<logicaPiloto>();
 	static public logicaPiloto contenedor;
@@ -254,8 +254,7 @@ public class ventanaStart  implements KeyListener, ActionListener{
 						contenedor = new logicaPiloto();   	
 						ventanaRegistro.window = new ventanaRegistro();
 						ventanaRegistro.window.frame.setVisible(true);
-						
-						
+											
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

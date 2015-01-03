@@ -28,11 +28,16 @@ public class enemigoDos {
 
 	//bandera de los hilos
 	public static boolean funcionar=true;
+	public static boolean pasoMapa=true;
 
 	//puntuacion
 	int puntuacion = 0;
 
 	public enemigoDos() {
+		//lave de los hilos
+		funcionar=true;
+		pasoMapa=true;
+
 		//lanzams hilo de creacion de enemigos
 		hiloCreacionEnemigos creacion = new hiloCreacionEnemigos(); 
 		creacion.start();
@@ -53,7 +58,7 @@ public class enemigoDos {
 	public class hiloCreacionEnemigos extends Thread{
 
 		public void run() {
-			while(funcionar&&ventanaGame.vida>0){
+			while(funcionar&&ventanaGame.vida>0&&pasoMapa){
 				unEnemigo= new logicaEnemigosConjunta(tipoEnemigo);
 				//posicon aleatoria en el eje de las x (sin que toque los bordes para que se vea bien la imagen
 				unEnemigo.setPosX((int)(Math.random()*((limiteIzquierdo)-limiteDerecho+1)+limiteDerecho));
@@ -90,7 +95,7 @@ public class enemigoDos {
 	public class hiloMovimiento extends Thread{
 		int i;
 		public void run(){
-			while(ventanaGame.vida>0){
+			while(ventanaGame.vida>0&&(funcionar)){
 				//les damos movimiento
 				for(i=0;i<misEnemigos.size();i++){
 					//misEnemigos.get(i).gira(10);
@@ -126,8 +131,9 @@ public class enemigoDos {
 							
 							//paramos los hilos
 							ventanaGame.funcionar=false;
-
+							
 						}
+						System.out.println("aaaaaaaaaa");
 						if ((ventanaGame.vida % 2) != 0) {
 							ventanaGame.corazon.setVidas(ventanaGame.vida);
 							ventanaGame.corazon.impares();
@@ -165,7 +171,7 @@ public class enemigoDos {
 		int i;
 		int z;
 		public void run(){
-			while(ventanaGame.vida>0){
+			while(ventanaGame.vida>0&&(funcionar)){
 				for(z=0;z<ventanaGame.misLasers.size();z++){
 					for(i=0;i<misEnemigos.size();i++){
 

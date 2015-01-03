@@ -1,5 +1,9 @@
 package JOptionPaneles;
 
+import hilosEnemigos.enemigoCuatro;
+import hilosEnemigos.enemigoDos;
+import hilosEnemigos.enemigoUno;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -20,6 +24,12 @@ import javax.swing.JLabel;
 
 
 
+
+
+
+
+
+
 import ventanas.ventanaGame;
 import ventanas.ventanaRegistro;
 import ventanas.ventanaStart;
@@ -34,6 +44,8 @@ import java.awt.event.KeyListener;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.SwingConstants;
+
+import logica.logicaCambio;
 
 public class gameOver implements KeyListener, ActionListener{
 	//el objeto de esta clase
@@ -72,6 +84,14 @@ public class gameOver implements KeyListener, ActionListener{
 	 */
 	public gameOver() {
 		initialize();
+		
+	//parar todos los hilos
+	ventanaGame.funcionar=false;
+	logicaCambio.funcionar=false;
+	enemigoUno.funcionar=false;
+	enemigoDos.funcionar=false;
+	enemigoCuatro.funcionar=false;
+	
 	}
 
 	/**
@@ -142,10 +162,39 @@ public class gameOver implements KeyListener, ActionListener{
 	public void actionPerformed(ActionEvent botonPulsado) {
 		// TODO Auto-generated method stub
 		if (botonPulsado.getSource()==botonNext) {
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+  	
+						resumen.window = new resumen();
+						resumen.window.frame.setVisible(true);
+						
+						
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
 			this.window.frame.dispose();
+			ventanaGame.window.frame.dispose();
 			
 		}else if(botonPulsado.getSource()==botonAdelante){
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+  	
+						ventanaStart.window = new ventanaStart();
+						ventanaStart.window.frame.setVisible(true);
+
+						
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
 			this.window.frame.dispose();
+			ventanaGame.window.frame.dispose();
+			
 			
 		}
 	}
