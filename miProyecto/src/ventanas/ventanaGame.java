@@ -85,6 +85,9 @@ public class ventanaGame implements KeyListener, ActionListener {
 	//boolean para que funcionen los hilos
 	public static boolean funcionar= true;
 	protected int i;
+	//Logica para pausar los hilos
+	public static boolean pausar=true;
+	boolean contador=true;
 	
 	//puntuacion
 	public static JLabel puntuacionVisible;
@@ -158,6 +161,10 @@ public class ventanaGame implements KeyListener, ActionListener {
 		
 		//iniciamos el contador de tiempo de la partida
 		ventanaStart.contenedor.setTiempoPartida(System.currentTimeMillis());
+		
+		//iniciamos las variables del boton pausa
+		pausar=true;
+		contador=true;
 
 	}
 
@@ -262,21 +269,13 @@ public class ventanaGame implements KeyListener, ActionListener {
 			this.window.frame.dispose();
 		}
 		if(e.getSource()==bPause){
-
-			EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					try {
-  	
-						resumen.window = new resumen();
-						resumen.window.frame.setVisible(true);
-						
-						
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
-			this.window.frame.dispose();
+			if(contador==true){//pausamos hilos
+				contador=false;
+				pausar=false;
+			}else{
+				contador=true;
+				pausar=true;//despausamos los hilos
+			}
 		}
 
 	}
@@ -329,113 +328,117 @@ public class ventanaGame implements KeyListener, ActionListener {
 	public class hiloMiNave extends Thread{
 		long tiempoEsfera;
 
-		
 		public void run(){
-
 			while(funcionar){
-				
+				if(pausar==true){
 				naveConjunta.mueve(0.040);
-				//movimiento de la nave
-				if(teclasMovimientoNave[0]==true){
-					if(naveConjunta.getMiVelocidad()==0){
-						naveConjunta.acelera(-100);
-						
-						
-					}
-					else if(naveConjunta.getMiVelocidad()<-400){
-						naveConjunta.acelera(0);
-					}
-					else if(naveConjunta.getMiVelocidad()>0){
-						naveConjunta.acelera(-50);
-					}
-					else
-						naveConjunta.acelera(-35);
+				
+				//usamps el boton pausa
+			
+					//movimiento de la nave
+					if(teclasMovimientoNave[0]==true){
+						if(naveConjunta.getMiVelocidad()==0){
+							naveConjunta.acelera(-100);
 
-					//ponemos los cohetes en posicion
-					coheteDerecho.setVisible(true);
-					
-						
-				}else{
-					coheteDerecho.setVisible(false);
-				}
-				
-	
-				if(teclasMovimientoNave[1]==true){
-					if(naveConjunta.getMiVelocidad()==0){
-						naveConjunta.acelera(100);
-					}
-					else if(naveConjunta.getMiVelocidad()>400){
-						naveConjunta.acelera(0);
-					}
-					else if(naveConjunta.getMiVelocidad()<0){
-						naveConjunta.acelera(100);
-					}
-					else
-						naveConjunta.acelera(35);
-					
-					//ponemos los cohetes en posicion
-					coheteIzquierdo.setVisible(true);
-					
-					
-				}else{
-					coheteIzquierdo.setVisible(false);
-				}
-				
-				
-				
-				if(teclasMovimientoNave[2]==true){
-					
-				}
-				//para cuando la tecla no esta pulsada
-				if(teclasMovimientoNave[1]==false){
-					//tiempo=0;;
-				}
-				
-				if (naveConjunta.getPosX() < paneljuego.WIDTH -logicaFotoMiNave.TAMAÑO/2 ) {
-					naveConjunta.setPosX(naveConjunta.getPosX()+10);
-					naveConjunta.setMiVelocidad(-naveConjunta.getMiVelocidad());
-					tiempoEsfera=System.currentTimeMillis();
-					tiempoEsfera=System.currentTimeMillis();
-					esfera.setVisible(true);
-					//aumentamos el contanador
-					ventanaStart.contenedor.setRebotesIzquierdos(ventanaStart.contenedor.getRebotesIzquierdos()+1);
-				}
-				
-				if (naveConjunta.getPosX()>paneljuego.getWidth()-logicaFotoMiNave.TAMAÑO/2  ) {
-					naveConjunta.setPosX(naveConjunta.getPosX()-10);
-					naveConjunta.setMiVelocidad(-naveConjunta.getMiVelocidad());
-					tiempoEsfera=System.currentTimeMillis();
-					esfera.setVisible(true);
-					//aumentamos el contanador
-					ventanaStart.contenedor.setRebotesDerechos(ventanaStart.contenedor.getRebotesDerechos()+1);
-				}
-				//hacemos invisible a esfera
-				if(System.currentTimeMillis()-tiempoEsfera>700){
-					esfera.setVisible(false);
-				}
-				
-				//las posiciones de los componentes sigen la nave
-				coheteIzquierdo.setLocation((int)naveConjunta.getPosX()-53, (int)naveConjunta.getPosY()+60);
-				coheteDerecho.setLocation((int)naveConjunta.getPosX()+57, (int)naveConjunta.getPosY()+60);
-				esfera.setLocation((int)naveConjunta.getPosX()-23,480);
-				
 
-				try {
-					
-					Thread.sleep(40);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+						}
+						else if(naveConjunta.getMiVelocidad()<-400){
+							naveConjunta.acelera(0);
+						}
+						else if(naveConjunta.getMiVelocidad()>0){
+							naveConjunta.acelera(-50);
+						}
+						else
+							naveConjunta.acelera(-35);
+
+						//ponemos los cohetes en posicion
+						coheteDerecho.setVisible(true);
+
+
+					}else{
+						coheteDerecho.setVisible(false);
+					}
+
+
+					if(teclasMovimientoNave[1]==true){
+						if(naveConjunta.getMiVelocidad()==0){
+							naveConjunta.acelera(100);
+						}
+						else if(naveConjunta.getMiVelocidad()>400){
+							naveConjunta.acelera(0);
+						}
+						else if(naveConjunta.getMiVelocidad()<0){
+							naveConjunta.acelera(100);
+						}
+						else
+							naveConjunta.acelera(35);
+
+						//ponemos los cohetes en posicion
+						coheteIzquierdo.setVisible(true);
+
+
+					}else{
+						coheteIzquierdo.setVisible(false);
+					}
+
+
+
+					if(teclasMovimientoNave[2]==true){
+
+					}
+					//para cuando la tecla no esta pulsada
+					if(teclasMovimientoNave[1]==false){
+						//tiempo=0;;
+					}
+
+					if (naveConjunta.getPosX() < paneljuego.WIDTH -logicaFotoMiNave.TAMAÑO/2 ) {
+						naveConjunta.setPosX(naveConjunta.getPosX()+10);
+						naveConjunta.setMiVelocidad(-naveConjunta.getMiVelocidad());
+						tiempoEsfera=System.currentTimeMillis();
+						tiempoEsfera=System.currentTimeMillis();
+						esfera.setVisible(true);
+						//aumentamos el contanador
+						ventanaStart.contenedor.setRebotesIzquierdos(ventanaStart.contenedor.getRebotesIzquierdos()+1);
+					}
+
+					if (naveConjunta.getPosX()>paneljuego.getWidth()-logicaFotoMiNave.TAMAÑO/2  ) {
+						naveConjunta.setPosX(naveConjunta.getPosX()-10);
+						naveConjunta.setMiVelocidad(-naveConjunta.getMiVelocidad());
+						tiempoEsfera=System.currentTimeMillis();
+						esfera.setVisible(true);
+						//aumentamos el contanador
+						ventanaStart.contenedor.setRebotesDerechos(ventanaStart.contenedor.getRebotesDerechos()+1);
+					}
+					//hacemos invisible a esfera
+					if(System.currentTimeMillis()-tiempoEsfera>700){
+						esfera.setVisible(false);
+					}
+
+					//las posiciones de los componentes sigen la nave
+					coheteIzquierdo.setLocation((int)naveConjunta.getPosX()-53, (int)naveConjunta.getPosY()+60);
+					coheteDerecho.setLocation((int)naveConjunta.getPosX()+57, (int)naveConjunta.getPosY()+60);
+					esfera.setLocation((int)naveConjunta.getPosX()-23,480);
+
+
+					try {
+
+						Thread.sleep(40);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		}
 
 	}
-	
+
 	//el hilo de los lasers
 			public class hiloLaser extends Thread{
 				public void run(){
 					while(funcionar==true){
+						//usamos boton pausar
+						if(pausar==true){
 						if(teclasMovimientoNave[2]==true){
 							unLaser= new laserConjunto();
 							unLaser.setPosX(naveConjunta.getPosX()+13);
@@ -476,6 +479,7 @@ public class ventanaGame implements KeyListener, ActionListener {
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
+						}
 						}
 
 					}

@@ -24,6 +24,9 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.util.Properties;
 
 import javax.swing.SwingConstants;
 
@@ -41,6 +44,9 @@ public class ventanaRegistro implements KeyListener, ActionListener {
 	JLabel titulo ;
 	JLabel tituloPuntucaciones;
 	JButton bContinuar; 
+	
+	//ponemos el properties
+	private java.util.Properties miConfiguracion;
 
 	//tamaño del frame por defecto
 	int anchoFrame=450;
@@ -81,7 +87,8 @@ public class ventanaRegistro implements KeyListener, ActionListener {
 		int alturaBotonContinuar=23;
 		int tamañoBotonContinuar=11;
 
-	
+		//nombre por defecto del piloto
+		String nombrePiloto="Identificacion requerida, introduce tu nombre y procede a montar en tu nave. Gracias por tu colaboracion.";
 
 	/**
 	 * Launch the application.
@@ -104,7 +111,20 @@ public class ventanaRegistro implements KeyListener, ActionListener {
 	 * Create the application.
 	 */
 	public ventanaRegistro() {
+		
 		initialize();
+		
+		//Descargamos la informacion del properties
+		miConfiguracion = new Properties();
+		
+		try {
+			miConfiguracion.loadFromXML( new FileInputStream( new java.io.File("nombrePiloto.ini") ) );
+			nombrePiloto = miConfiguracion.getProperty( "NOMBRE" );
+			txtPonAquiTu.setText(nombrePiloto);
+			
+		}catch (Exception e) { 
+			System.out.println("No se ha podido cargar bien el fichero");
+		}
 	}
 
 	/**
@@ -147,7 +167,7 @@ public class ventanaRegistro implements KeyListener, ActionListener {
 		
 		txtExplicativo = new JTextPane();
 		txtExplicativo.setFont(new Font("Tahoma", Font.PLAIN, tamañoTextoTxt));
-		txtExplicativo.setText("Identificacion requerida, introduce tu nombre y procede a montar en tu nave. Gracias por tu colaboracion.");
+		txtExplicativo.setText(nombrePiloto);
 		txtExplicativo.setBounds(xTxt, yTxt, anchuraTxt, alturaTxt);
 		txtExplicativo.setEditable(false);
 		panelInicioFondo.add(txtExplicativo);
@@ -186,6 +206,17 @@ public class ventanaRegistro implements KeyListener, ActionListener {
 			if(txtPonAquiTu.getText().equals("")||txtPonAquiTu.getText().equals("Pon tu nombre, Recluta:")){
 				JOptionPane.showMessageDialog(null,"Pon tu nombre, recluta patoso!!!","ERROR", JOptionPane.ERROR_MESSAGE);
 			}else{
+				
+				//empezamos a guardar el properties
+				miConfiguracion = new Properties();
+				try {
+					miConfiguracion.setProperty("NOMBRE",txtPonAquiTu.getText());
+					miConfiguracion.storeToXML( new FileOutputStream( new java.io.File("nombrePiloto.ini") ), "Nombre del piloto" );
+				}catch (Exception ex) { 
+					System.out.println("Fallo en el guardado del properties");
+				} 
+
+				
 				//metemos el valor dentro del contendor del personaje
 				ventanaStart.contenedor.setNombre(txtPonAquiTu.getText());
 				//this.window.frame.dispose();

@@ -105,11 +105,15 @@ public class enemigoDos {
 					misEnemigos.get(i).mueve(0.040, misEnemigos.get(i).getGiro());
 					ventanaGame.paneljuego.repaint();
 				}
+				
+				//miramos si pasan la frontera
 				for(i=0;i<misEnemigos.size();i++){
 					if(misEnemigos.get(i).getPosY()>ventanaGame.altoPanelJuego-50){
 						ventanaGame.paneljuego.remove(misEnemigos.get(i).getFotoEnemigo());
 						misEnemigos.remove(i);
 						ventanaGame.vida-=1;
+						ventanaStart.contenedor.setEnemigoPasa2(ventanaStart.contenedor.getEnemigoPasa2()+1);
+						//vemos que hacer con los corazones
 						if(ventanaGame.vida<=0){
 							ventanaGame.corazon.setVidas(ventanaGame.vida);
 							ventanaGame.corazon.pares();
@@ -180,6 +184,8 @@ public class enemigoDos {
 						if(areaEnemigo.intersects(areaLaser.getBounds2D())){
 							ventanaGame.paneljuego.remove(misEnemigos.get(i).getFotoEnemigo());
 							misEnemigos.remove(i);
+							//contamos enemigos muertos
+							ventanaStart.contenedor.setEnemigosNMuertos2(ventanaStart.contenedor.getEnemigosNMuertos2()+1);
 							
 							//aumentamos la puntuacion
 							ventanaStart.contenedor.setPuntuacion(ventanaStart.contenedor.getPuntuacion()+1);

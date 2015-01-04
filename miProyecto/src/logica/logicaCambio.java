@@ -41,45 +41,47 @@ public class logicaCambio {
 	public class hiloCambios extends Thread{
 		public void run(){
 			while(funcionar){
-				try {
-					//si pasa 30 segundos hace el primer cambio de mapa
-					if(((int)System.currentTimeMillis()-tiempoAlEmpezar>3000)&&(ventanaGame.vida>0)){
-						//acabamos con los enemigos uno
-						enemigoUno.pasoMapa=false;
-						if((enemigosFirst.getTamañoArray()==0)&&(paso1==true)){
-							//EMPEZAMOS CON LOS DOS
-							paso1=false;
-							ventanaGame.paneljuego.setCambio("/fondos/puertaSalto.jpg");
-							ventanaGame.paneljuego.repaint();
-							//paramos la creacion de enenmigos de otro tipo
-							enemigoTwo=new enemigoDos();
-							
-							tiempoAlEmpezar=(int)System.currentTimeMillis();
-							
-						}
-						//ACABAMOS CON LOS ENEMIGOS DOS
-						if(((int)System.currentTimeMillis()-tiempoAlEmpezar>3000)&&(enemigosFirst.getTamañoArray()==0)&&(ventanaGame.vida>0)){
-							enemigoDos.pasoMapa=false;
-							
-							if((enemigoTwo.getTamañoArray()==0)&&(paso2==true)){
-								//EMPEZAMOS CON LOS TRES
-								paso2=false;
-								ventanaGame.paneljuego.setCambio("/fondos/saturno.jpg");
+				if(ventanaGame.pausar==true){
+					try {
+						//si pasa 30 segundos hace el primer cambio de mapa
+						if(((int)System.currentTimeMillis()-tiempoAlEmpezar>3000)&&(ventanaGame.vida>0)){
+							//acabamos con los enemigos uno
+							enemigoUno.pasoMapa=false;
+							if((enemigosFirst.getTamañoArray()==0)&&(paso1==true)){
+								//EMPEZAMOS CON LOS DOS
+								paso1=false;
+								ventanaGame.paneljuego.setCambio("/fondos/puertaSalto.jpg");
 								ventanaGame.paneljuego.repaint();
-								enemigosFourth=new enemigoCuatro();
-								//ACABAMOS CON LOS ENEMIGOS TRES....
-								//ultima entrada
-								funcionar= false;
+								//paramos la creacion de enenmigos de otro tipo
+								enemigoTwo=new enemigoDos();
+
+								tiempoAlEmpezar=(int)System.currentTimeMillis();
+
 							}
+							//ACABAMOS CON LOS ENEMIGOS DOS
+							if(((int)System.currentTimeMillis()-tiempoAlEmpezar>3000)&&(enemigosFirst.getTamañoArray()==0)&&(ventanaGame.vida>0)){
+								enemigoDos.pasoMapa=false;
+
+								if((enemigoTwo.getTamañoArray()==0)&&(paso2==true)){
+									//EMPEZAMOS CON LOS TRES
+									paso2=false;
+									ventanaGame.paneljuego.setCambio("/fondos/saturno.jpg");
+									ventanaGame.paneljuego.repaint();
+									enemigosFourth=new enemigoCuatro();
+									//ACABAMOS CON LOS ENEMIGOS TRES....
+									//ultima entrada
+									funcionar= false;
+								}
+							}
+
 						}
 
-					}
-					
 
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		}

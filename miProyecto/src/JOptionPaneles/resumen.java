@@ -184,8 +184,8 @@ public class resumen implements  ActionListener {
 
 		Object [] fila = new Object[numCols]; 
 		fila[0] = Integer.toString(ventanaStart.contenedor.getEnemigosNMuertos1());
-		fila[1] = "420";
-		fila[2] = "420";
+		fila[1] = Integer.toString(ventanaStart.contenedor.getEnemigosNMuertos2());
+		fila[2] = Integer.toString(ventanaStart.contenedor.getEnemigosNMuertos3());
 		fila[3] = Integer.toString(ventanaStart.contenedor.getEnemigosNMuertos1()+ventanaStart.contenedor.getEnemigosNMuertos2()+ventanaStart.contenedor.getEnemigosNMuertos3());
 		
 		((DefaultTableModel)tableEnemigosMuertos.getModel()).addRow(fila);
@@ -229,8 +229,8 @@ public class resumen implements  ActionListener {
 		int numCols2 = tablePasanFrontera.getModel().getColumnCount();
 		Object [] fila2 = new Object[numCols2]; 
 		fila2[0] = Integer.toString(ventanaStart.contenedor.getEnemigoPasa1());
-		fila2[1] = "420";
-		fila2[2] = "420";
+		fila2[1] = Integer.toString(ventanaStart.contenedor.getEnemigoPasa2());
+		fila2[2] = Integer.toString(ventanaStart.contenedor.getEnemigoPasa3());
 		fila2[3] = Integer.toString(ventanaStart.contenedor.getEnemigoPasa1()+ventanaStart.contenedor.getEnemigoPasa2()+ventanaStart.contenedor.getEnemigoPasa3());
 
 		((DefaultTableModel)tablePasanFrontera.getModel()).addRow(fila2);

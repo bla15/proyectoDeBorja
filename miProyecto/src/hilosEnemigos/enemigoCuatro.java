@@ -132,6 +132,8 @@ public class hiloMovimiento extends Thread{
 					tiempo.remove(i);
 					ventanaGame.paneljuego.repaint();
 					ventanaGame.vida-=1;
+					ventanaStart.contenedor.setEnemigoPasa3(ventanaStart.contenedor.getEnemigoPasa3()+1);
+					//vemos que hacer con los corazones
 					if(ventanaGame.vida<=0){
 						ventanaGame.corazon.setVidas(ventanaGame.vida);
 						ventanaGame.corazon.pares();
@@ -191,6 +193,8 @@ public class hiloChoques extends Thread{
 						ventanaGame.paneljuego.remove(misEnemigos.get(i).getFotoEnemigo());
 						misEnemigos.remove(i);
 						tiempo.remove(i);
+						//contamos enemigos muertos
+						ventanaStart.contenedor.setEnemigosNMuertos3(ventanaStart.contenedor.getEnemigosNMuertos3()+1);
 						
 						//aumentamos la puntuacion
 						ventanaStart.contenedor.setPuntuacion(ventanaStart.contenedor.getPuntuacion()+2);
