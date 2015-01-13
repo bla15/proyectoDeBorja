@@ -25,6 +25,8 @@ public class enemigoUno {
 	public  logicaEnemigosConjunta unEnemigo;
 	ArrayList<logicaEnemigosConjunta> misEnemigos = new ArrayList<logicaEnemigosConjunta>();	
 	int tipoEnemigo=1;
+	int velocidadEstandar=-50;
+	int tiempoCreacion=2000;
 
 	//bandera de los hilos
 	public static boolean funcionar=true;
@@ -36,6 +38,9 @@ public class enemigoUno {
 		//lave de los hilos
 		funcionar=true;
 		pasoMapa=true;
+		
+		velocidadEstandar=-50;
+		tiempoCreacion=2000;
 
 		//lanzams hilo de creacion de enemigos
 		hiloCreacionEnemigos creacion = new hiloCreacionEnemigos(); 
@@ -76,13 +81,22 @@ public class enemigoUno {
 					if(unEnemigo!=null){
 						ventanaGame.paneljuego.add(unEnemigo.getFotoEnemigo());
 						ventanaGame.paneljuego.repaint();
+						
+						//cada nuevo enemigo sale mas rapido
+						velocidadEstandar-=5;
+						
 					}else{
 						System.out.println("no hay aun enemigo");
 					}
+					if(tiempoCreacion>=1500){
+						//reducimos tiempo de creacion
+						tiempoCreacion-=25;
+					}
+
 
 					try {
 						//cada cuanto tiempo los va creando
-						Thread.sleep(2000);
+						Thread.sleep(tiempoCreacion);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -101,17 +115,16 @@ public class enemigoUno {
 		public void run(){
 			while(ventanaGame.vida>0&&(funcionar)){
 				//usamos el boton pausar
-				System.out.println(ventanaGame.pausar);
+				//System.out.println(ventanaGame.pausar);
 				if(ventanaGame.pausar==true){
 					
 					//les damos movimiento
 					for(i=0;i<misEnemigos.size();i++){
 						//	misEnemigos.get(i).gira(10);
-						misEnemigos.get(i).setSuVelocidad(-50);
+						misEnemigos.get(i).setSuVelocidad(velocidadEstandar);
 						misEnemigos.get(i).mueve(0.040, misEnemigos.get(i).getGiro());
 						ventanaGame.paneljuego.repaint();
 					}
-
 					//miramos si sobrepasan las frontera
 					for(i=0;i<misEnemigos.size();i++){
 						if(misEnemigos.get(i).getPosY()>ventanaGame.altoPanelJuego-50){

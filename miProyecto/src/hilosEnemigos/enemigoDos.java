@@ -25,6 +25,8 @@ public class enemigoDos {
 	public  logicaEnemigosConjunta unEnemigo;
 	ArrayList<logicaEnemigosConjunta> misEnemigos = new ArrayList<logicaEnemigosConjunta>();
 	int tipoEnemigo=2;
+	int velocidadEstandar=-50;
+	int tiempoCreacion=2000;
 
 	//bandera de los hilos
 	public static boolean funcionar=true;
@@ -37,6 +39,9 @@ public class enemigoDos {
 		//lave de los hilos
 		funcionar=true;
 		pasoMapa=true;
+		
+		velocidadEstandar=-25;
+		tiempoCreacion=2000;
 
 		//lanzams hilo de creacion de enemigos
 		hiloCreacionEnemigos creacion = new hiloCreacionEnemigos(); 
@@ -77,12 +82,21 @@ public class enemigoDos {
 				misEnemigos.add(unEnemigo);
 
 				//lo sacmos en el panel de juego
-				ventanaGame.paneljuego.add(unEnemigo.getFotoEnemigo());
-				ventanaGame.paneljuego.repaint();
+				if(unEnemigo!=null){
+					ventanaGame.paneljuego.add(unEnemigo.getFotoEnemigo());
+					ventanaGame.paneljuego.repaint();
+					//cada nuevo enemigo sale mas rapido
+					velocidadEstandar-=5;
+	
+				}
+				if(tiempoCreacion>=1500){
+					//reducimos tiempo de creacion
+					tiempoCreacion-=25;
+				}
 				
 				try {
 					//cada cuanto tiempo los va creando
-					Thread.sleep(2000);
+					Thread.sleep(tiempoCreacion);
 				} catch (InterruptedException e) {
 				
 					// TODO Auto-generated catch block
@@ -100,7 +114,7 @@ public class enemigoDos {
 				for(i=0;i<misEnemigos.size();i++){
 					//misEnemigos.get(i).gira(10);
 					//Ultimo cambiado   misEnemigos.get(i).setSuVelocidad(-50/4);
-					misEnemigos.get(i).setSuVelocidad(-50/2);
+					misEnemigos.get(i).setSuVelocidad(velocidadEstandar);
 					//Ultimo modificado con giro = 90 como giro base (el movimiento enemigo es ya conocido)
 					misEnemigos.get(i).mueve(0.040, misEnemigos.get(i).getGiro());
 					ventanaGame.paneljuego.repaint();

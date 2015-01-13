@@ -27,6 +27,11 @@ public class enemigoCuatro {
 	ArrayList<Long> tiempo = new ArrayList<Long>();
 	Long tiempoAccion;
 	int tipoEnemigo=4;
+	
+	int velocidadEstandar=-80;
+	int tiempoCreacion=2000;
+	
+	long tiempoInicio;
 
 	//bandera de los hilos
 	public static boolean funcionar=true;
@@ -39,6 +44,10 @@ public class enemigoCuatro {
 		//lave de los hilos
 		funcionar=true;
 		pasoMapa=true;
+		
+		velocidadEstandar=-80;
+		tiempoCreacion=2000;
+		tiempoInicio=System.currentTimeMillis();
 		
 		//lanzams hilo de creacion de enemigos
 		hiloCreacionEnemigos creacion = new hiloCreacionEnemigos(); 
@@ -70,14 +79,20 @@ public class hiloCreacionEnemigos extends Thread{
 				misEnemigos.add(unEnemigo);
 				tiempo.add(System.currentTimeMillis());
 				
-
-				//lo sacamos en el panel de juego
-				ventanaGame.paneljuego.add(unEnemigo.getFotoEnemigo());
-				ventanaGame.paneljuego.repaint();
+				if(unEnemigo!=null){
+					//lo sacamos en el panel de juego
+					ventanaGame.paneljuego.add(unEnemigo.getFotoEnemigo());
+					ventanaGame.paneljuego.repaint();
+				}
+				
+				if(tiempoCreacion>=1500){
+					//reducimos tiempo de creacion
+					tiempoCreacion-=25;
+				}
 				
 				try {
 					//cada cuanto tiempo los va creando
-					Thread.sleep(2000);
+					Thread.sleep(tiempoCreacion);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -111,7 +126,7 @@ public class hiloMovimiento extends Thread{
 			//les damos movimiento
 			for(i=0;i<misEnemigos.size();i++){
 			//	misEnemigos.get(i).gira(10);
-				misEnemigos.get(i).setSuVelocidad(-100);
+				misEnemigos.get(i).setSuVelocidad(velocidadEstandar);
 				//Aqui le pasamos los parametros que necesita para mover el enemigo
 				misEnemigos.get(i).mueve(0.040, misEnemigos.get(i).getGiro());
 				ventanaGame.paneljuego.repaint();
@@ -165,6 +180,11 @@ public class hiloMovimiento extends Thread{
 					}
 				}
 				
+			}
+			
+			if(System.currentTimeMillis()-tiempoInicio>5000){
+				tiempoInicio=System.currentTimeMillis();
+				velocidadEstandar-=5;
 			}
 				try {
 					hiloMovimiento.sleep(30);

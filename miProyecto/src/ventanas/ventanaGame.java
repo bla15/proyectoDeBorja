@@ -68,6 +68,8 @@ public class ventanaGame implements KeyListener, ActionListener {
 	static logicaCojuntaMiNave naveConjunta;
 	static laserConjunto unLaser;
 	boolean teclasMovimientoNave [] = new boolean[3];
+	long tiempoPulsado;
+	
 	//cohetes
 	logicaCoheteDerecho coheteDerecho;
 	logicaCoheteIzquierdo coheteIzquierdo;
@@ -78,7 +80,7 @@ public class ventanaGame implements KeyListener, ActionListener {
 	//arrayList de los lasers que voy disparando
 	public static ArrayList<laserConjunto> misLasers = new ArrayList<laserConjunto>();
 	
-	//clase de cambi de entorno
+	//clase de cambio de entorno
 	static logicaCambio change;
 
 	//elemento hilos
@@ -91,6 +93,8 @@ public class ventanaGame implements KeyListener, ActionListener {
 	
 	//puntuacion
 	public static JLabel puntuacionVisible;
+	
+	
 
 
 	/**
@@ -266,7 +270,7 @@ public class ventanaGame implements KeyListener, ActionListener {
 		//si le damos a play ponemos el foco y el juego vuelve a funcionr
 		
 		if(e.getSource()==bSalir){
-			this.window.frame.dispose();
+			System.exit( 0 ); 
 		}
 		if(e.getSource()==bPause){
 			if(contador==true){//pausamos hilos
