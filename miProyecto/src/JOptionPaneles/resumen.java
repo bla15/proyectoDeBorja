@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import fondos.logicaFondos;
 
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JRootPane;
@@ -27,6 +28,9 @@ import ventanas.ventanaStart;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 
 import logica.logicaPiloto;
 
@@ -435,6 +439,34 @@ public class resumen implements  ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource()==bSalir) {
+			
+			System.out.println(ventanaStart.mejoresPilotos.size());
+			
+			//guardamos el has-set con sus cambios
+			File path= new File("src/ventanas/mejoresJugadores.dat");
+		
+			try {
+				
+				if(ventanaStart.guardar==true){
+					ObjectOutputStream oos = new ObjectOutputStream( new FileOutputStream(path) );
+					oos.writeObject( ventanaStart.mejoresPilotos);
+					oos.close();
+					JOptionPane.showMessageDialog( null, "El fichero " + 
+							path + " se ha guardado con los datos.", "Salvado correcto", JOptionPane.INFORMATION_MESSAGE );
+				}else{
+					JOptionPane.showMessageDialog( null, "El piloto "+ventanaStart.contenedor.getNombre() 
+							 + " esta duplicado", "Fichero duplicado", JOptionPane.INFORMATION_MESSAGE );
+					
+				}
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+				
+				JOptionPane.showMessageDialog( null, "El fichero " + 
+						path + " no ha podido salvarse.", "Fichero incorrecto", JOptionPane.ERROR_MESSAGE );
+			}
+			
+			
 			System.exit( 0 ); 
 		}
 		if (e.getSource()==bPantallaStart) {

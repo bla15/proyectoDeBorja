@@ -71,7 +71,7 @@ public class logicaCambio {
 							
 							if(paso2==true){
 								//System.out.println(((int)System.currentTimeMillis()-tiempoMapa2)/1000+"  seg:   mapa 2");
-								if(((int)System.currentTimeMillis()-tiempoMapa2>3000)&&(enemigosFirst.getTamañoArray()==0)&&(ventanaGame.vida>0)){
+								if(((int)System.currentTimeMillis()-tiempoMapa2>100)&&(enemigosFirst.getTamañoArray()==0)&&(ventanaGame.vida>0)){
 									enemigoDos.pasoMapa=false;
 
 									if((enemigoTwo.getTamañoArray()==0)&&(paso2==true)){

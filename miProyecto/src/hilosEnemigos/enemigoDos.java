@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import JOptionPaneles.gameOver;
 import ventanas.ventanaGame;
 import ventanas.ventanaStart;
+import logica.logicaPiloto;
 import logicaEnemigos.logicaEnemigosConjunta;
 
 
@@ -139,6 +140,27 @@ public class enemigoDos {
 										  	
 										gameOver.window = new gameOver();
 										gameOver.window.frame.setVisible(true);
+										
+										for(logicaPiloto opc : ventanaStart.mejoresPilotos){
+											//si tiene el mismo nombre que algun elemento ya guardado en la lista
+											if(ventanaStart.contenedor.getNombre().equals(opc.getNombre())){
+												for(logicaPiloto zp : ventanaStart.mejoresPilotos){
+													//y si ademas tiene la misma puntuacion que un elemento de las lista
+													if(ventanaStart.contenedor.getPuntuacion()==zp.getPuntuacion()){
+														ventanaStart.guardar=false;
+													}else{
+														//se puede guardar
+														ventanaStart.guardar=true;
+													}
+												}										
+
+											}else{
+												ventanaStart.guardar=true;
+											}
+										}
+										if(ventanaStart.guardar==true){
+											ventanaStart.mejoresPilotos.add(ventanaStart.contenedor);	
+										}
 										
 										
 									} catch (Exception e) {

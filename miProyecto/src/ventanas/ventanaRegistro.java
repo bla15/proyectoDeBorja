@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Color;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -32,6 +33,9 @@ import javax.swing.SwingConstants;
 
 import logica.logicaPiloto;
 import presentaciones.presentacion0;
+
+import javax.swing.JScrollPane;
+import javax.swing.JList;
 
 public class ventanaRegistro implements KeyListener, ActionListener {
 
@@ -86,9 +90,23 @@ public class ventanaRegistro implements KeyListener, ActionListener {
 		int anchuraBotonContinuar=89;
 		int alturaBotonContinuar=23;
 		int tamañoBotonContinuar=11;
+		
+		//valores del scrollPanel
+		int xScroll=10;
+		int yScroll=188;
+		int anchuraScroll=200;
+		int alturaScroll=50;
+		
+		//valores de la lista
+		int tamañoLetraList = 11;
+		
+		//lista
+		private DefaultListModel lmName;
 
 		//nombre por defecto del piloto
 		String nombrePiloto="Identificacion requerida, introduce tu nombre y procede a montar en tu nave. Gracias por tu colaboracion.";
+		private JScrollPane scrollPanedeList;
+		private JList list;
 
 	/**
 	 * Launch the application.
@@ -111,6 +129,8 @@ public class ventanaRegistro implements KeyListener, ActionListener {
 	 * Create the application.
 	 */
 	public ventanaRegistro() {
+		
+		lmName = new DefaultListModel();
 		
 		initialize();
 		
@@ -154,7 +174,11 @@ public class ventanaRegistro implements KeyListener, ActionListener {
 				//Regla de tres para remasterizar el boton de continuar
 				bContinuar.setBounds(frame.getWidth()*xBotonContinuar/anchoFrame,frame.getHeight()*yBotonContinuar/altoFrame,frame.getWidth()*anchuraBotonContinuar/anchoFrame,frame.getHeight()*alturaBotonContinuar/altoFrame);
 				
+				//Regla de tres para remasterizar el srollPannel
+				scrollPanedeList.setBounds(frame.getWidth()*xScroll/anchoFrame,frame.getHeight()*yScroll/altoFrame,frame.getWidth()*anchuraScroll/anchoFrame,frame.getHeight()*alturaScroll/altoFrame);
 				
+				//Regla de tres para remasterizar el srollPannel
+				list.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, (frame.getHeight()+frame.getWidth())*tamañoLetraList/(anchoFrame+altoFrame)));
 			}
 		});
 		frame.setBounds(100, 100, anchoFrame, altoFrame);
@@ -197,6 +221,22 @@ public class ventanaRegistro implements KeyListener, ActionListener {
 		bContinuar.setBounds(xBotonContinuar, yBotonContinuar, anchuraBotonContinuar, alturaBotonContinuar);
 		bContinuar.addActionListener(this);
 		panelInicioFondo.add(bContinuar);
+		
+		scrollPanedeList = new JScrollPane();
+		scrollPanedeList.setBounds(xScroll, yScroll, anchuraScroll, alturaScroll);
+		panelInicioFondo.add(scrollPanedeList);
+		
+		list = new JList(lmName);
+		scrollPanedeList.setViewportView(list);
+		
+		lmName.removeAllElements();
+		for(logicaPiloto opc  : ventanaStart.mejoresPilotos){
+			
+			lmName.addElement("Nombre:  "+opc.getNombre()+"    puntuacion:   "+opc.getPuntuacion());
+		
+		}
+		
+		
 	}
 
 	@Override
@@ -256,5 +296,4 @@ public class ventanaRegistro implements KeyListener, ActionListener {
 		// TODO Auto-generated method stub
 		
 	}
-	
 }

@@ -1,8 +1,11 @@
 package logica;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 
-public class logicaPiloto {
+
+
+public class logicaPiloto implements Serializable{
 	
 	//iniciamos las variables
 	int puntuacion=0;
@@ -146,6 +149,13 @@ public class logicaPiloto {
 		this.rebotesDerechos = rebotesDerechos;
 	}
 	
-	
+
+	@Override
+	public boolean equals(Object obj) {  
+		//Dos pilotos son iguales si tienen la misma putuacion
+		if (!(obj instanceof logicaPiloto)) return false;
+		logicaPiloto est2 = (logicaPiloto) obj;
+		return (getPuntuacion()==(est2.getPuntuacion()));
+	}
 
 }

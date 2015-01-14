@@ -14,6 +14,7 @@ import logica.logicaCoheteIzquierdo;
 import logica.logicaCojuntaMiNave;
 import logica.logicaEsfera;
 import logica.logicaFotoMiNave;
+import logica.logicaPiloto;
 import logicaLaser.laserConjunto;
 import logicaLaser.logicaFotoLaser;
 import logicaTitulos.logicaMapa;
@@ -31,6 +32,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -41,10 +43,14 @@ import javax.swing.SwingConstants;
 
 import JOptionPaneles.resumen;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 
 
 public class ventanaGame implements KeyListener, ActionListener {
-
+	
+	
 	public static JFrame frame;
 	public static ventanaGame window;
 	

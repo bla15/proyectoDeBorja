@@ -4,12 +4,19 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.LinkedList;
 
 import javax.swing.JButton;
@@ -21,19 +28,24 @@ import logica.logicaPiloto;
 import fondos.logicaFondos;
 
 import javax.swing.ImageIcon;
+import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
 
 import presentaciones.presentacion0;
 
 public class ventanaStart  implements KeyListener, ActionListener{
 
+	public static ArrayList<logicaPiloto> mejoresPilotos = new ArrayList<logicaPiloto>();
+	
 	public static JFrame frame;
 	private logicaFondos panelInicioFondo;
 	private JButton botonStart;
 
 	public static ventanaStart window;
 	
-	static LinkedList<logicaPiloto>registro=new LinkedList<logicaPiloto>();
 	static public logicaPiloto contenedor;
+	
+	//bandera guardado
+	public static boolean guardar=true;
 	
 	//tamaño del frame por defecto
 	int anchoFrame=450;
@@ -127,9 +139,42 @@ public class ventanaStart  implements KeyListener, ActionListener{
 	 * Create the application.
 	 */
 	public ventanaStart() {
+		
+		guardar=true;
+		//cargamos los mejores pilotos
+		cargar();
+		
 		initialize();
 		
 	}
+
+	public void cargar(){
+		try {
+			ObjectInputStream ois = new ObjectInputStream( new FileInputStream( "src/ventanas/mejoresJugadores.dat" ));
+
+			//limpiamos el has-set
+			mejoresPilotos.clear();
+
+			ArrayList<logicaPiloto> puente =((ArrayList<logicaPiloto>)ois.readObject());
+			for (logicaPiloto opc : puente) {
+				mejoresPilotos.add(opc);
+			}
+
+			ois.close();
+		}catch (Exception e) {
+			System.out.println("NO SE HA CARGADO CORRECTAMENTE");
+			
+		}
+
+	}
+	
+
+
+	public void ordenar(){
+		
+		
+	}
+	
 
 	/**
 	 * Initialize the contents of the frame.
@@ -216,22 +261,31 @@ public class ventanaStart  implements KeyListener, ActionListener{
 		marcoPuntucionesJlabel.setBounds(xMarcoPuntuaciones, yMarcoPuntuaciones, anchoMarcoPuntuaciones, altoMarcoPuntuaciones);
 		panelInicioFondo.add(marcoPuntucionesJlabel);
 		
-		puestoUnoJlabel = new JLabel("PEPE: 1111111");
+		puestoUnoJlabel = new JLabel("NUL: NUL");
 		puestoUnoJlabel.setForeground(Color.GREEN);
 		puestoUnoJlabel.setFont(new Font("Snap ITC", Font.BOLD, tamañoLetraTituloUno));
 		puestoUnoJlabel.setBounds(xPuntuacionesUno, yPuntuacionesUno, anchoPuntuacionesUno, altoPuntuacionesUno);
+		if(mejoresPilotos.size()>=1){
+			puestoUnoJlabel.setText(mejoresPilotos.get(0).getNombre()+":   "+mejoresPilotos.get(0).getPuntuacion());
+		}
 		panelInicioFondo.add(puestoUnoJlabel);
 		
-		puestoDosJlabel = new JLabel("PEPE: 1111111");
+		puestoDosJlabel = new JLabel("NULL: NUL");
 		puestoDosJlabel.setForeground(Color.GREEN);
 		puestoDosJlabel.setFont(new Font("Snap ITC", Font.BOLD, tamañoLetraTituloDos));
 		puestoDosJlabel.setBounds(xPuntuacionesDos, yPuntuacionesDos, anchoPuntuacionesDos, altoPuntuacionesDos);
+		if(mejoresPilotos.size()>=2){
+			puestoDosJlabel.setText(mejoresPilotos.get(1).getNombre()+":   "+mejoresPilotos.get(1).getPuntuacion());
+		}
 		panelInicioFondo.add(puestoDosJlabel);
 		
-		puestoTresJlabel = new JLabel("PEPE: 1111111");
+		puestoTresJlabel = new JLabel("NUL: NUL");
 		puestoTresJlabel.setForeground(Color.GREEN);
 		puestoTresJlabel.setFont(new Font("Snap ITC", Font.BOLD, tamañoLetraTituloTres));
 		puestoTresJlabel.setBounds(xPuntuacionesTres, yPuntuacionesTres, anchoPuntuacionesTres, altoPuntuacionesTres);
+		if(mejoresPilotos.size()>=3){
+			puestoTresJlabel.setText(mejoresPilotos.get(2).getNombre()+":   "+mejoresPilotos.get(2).getPuntuacion());
+		}
 		panelInicioFondo.add(puestoTresJlabel);
 		
 		bOptions = new JButton("");
