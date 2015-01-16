@@ -30,6 +30,7 @@ import fondos.logicaFondos;
 import javax.swing.ImageIcon;
 import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
 
+import JOptionPaneles.opciones;
 import presentaciones.presentacion0;
 
 public class ventanaStart  implements KeyListener, ActionListener{
@@ -291,6 +292,7 @@ public class ventanaStart  implements KeyListener, ActionListener{
 		bOptions = new JButton("");
 		bOptions.setIcon(new ImageIcon(ventanaStart.class.getResource("/fotosBotones/opciones.png")));
 		bOptions.setBounds(xOpciones, yOpciones, anchoBotonOptiocnes, altoBotonOpciones);
+		bOptions.addActionListener(this);
 		panelInicioFondo.add(bOptions);
 		
 		
@@ -308,6 +310,19 @@ public class ventanaStart  implements KeyListener, ActionListener{
 						contenedor = new logicaPiloto();   	
 						ventanaRegistro.window = new ventanaRegistro();
 						ventanaRegistro.window.frame.setVisible(true);
+											
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		}
+		if (e.getSource()==bOptions) {
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try { 	
+						opciones.window = new opciones();
+						opciones.window.frame.setVisible(true);
 											
 					} catch (Exception e) {
 						e.printStackTrace();

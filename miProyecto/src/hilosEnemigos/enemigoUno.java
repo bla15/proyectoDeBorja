@@ -117,8 +117,8 @@ public class enemigoUno {
 			while(ventanaGame.vida>0&&(funcionar)){
 				//usamos el boton pausar
 				//System.out.println(ventanaGame.pausar);
-				System.out.println();
-				if(ventanaGame.pausar==true){
+				
+				if(ventanaGame.pausar==true && ventanaGame.corazon!=null){
 					
 					//les damos movimiento
 					for(i=0;i<misEnemigos.size();i++){
@@ -188,12 +188,13 @@ public class enemigoUno {
 						}
 					}
 
-					try {
-						hiloMovimiento.sleep(30);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					
+				}
+				try {
+					hiloMovimiento.sleep(30);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 		}
