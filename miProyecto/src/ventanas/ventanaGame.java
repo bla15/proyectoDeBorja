@@ -448,48 +448,49 @@ public class ventanaGame implements KeyListener, ActionListener {
 				public void run(){
 					while(funcionar==true){
 						//usamos boton pausar
-						if(pausar==true){
-						if(teclasMovimientoNave[2]==true){
-							unLaser= new laserConjunto();
-							unLaser.setPosX(naveConjunta.getPosX()+13);
-							unLaser.setPosY(naveConjunta.getPosY());
-							unLaser.setMiVelocidad(300);
-							paneljuego.add(unLaser.getFotoLaser());
-							//aumentamos contador de los laseres
-							ventanaStart.contenedor.setMisilesDisparados(ventanaStart.contenedor.getMisilesDisparados()+1);
-
-							//el giro del laser
-							if(naveConjunta.getMiVelocidad()>100){
-								unLaser.gira(20);	
-							}
-
-							else if(naveConjunta.getMiVelocidad()<-100){
-								unLaser.gira(-20);
-
-							}
-
-							//lo añadimos al arrayList de lasers
-							misLasers.add(unLaser);
-							
-							paneljuego.repaint();
-
-						}
-						for(i=0;i<misLasers.size();i++){
-							misLasers.get(i).mueve(0.040);
-							if (misLasers.get(i).getPosY() < -logicaFotoMiNave.TAMAÑO/2 || misLasers.get(i).getPosY()>paneljuego.getHeight()-logicaFotoLaser.TAMAÑO/2 ) {
-								paneljuego.remove(misLasers.get(i).getFotoLaser());
-								misLasers.remove(i);
+							if(pausar==true){
+							if(teclasMovimientoNave[2]==true){
+								unLaser= new laserConjunto();
+								unLaser.setPosX(naveConjunta.getPosX()+13);
+								unLaser.setPosY(naveConjunta.getPosY());
+								unLaser.setMiVelocidad(300);
+								paneljuego.add(unLaser.getFotoLaser());
+								//aumentamos contador de los laseres
+								ventanaStart.contenedor.setMisilesDisparados(ventanaStart.contenedor.getMisilesDisparados()+1);
+	
+								//el giro del laser
+								if(naveConjunta.getMiVelocidad()>100){
+									unLaser.gira(20);	
+								}
+	
+								else if(naveConjunta.getMiVelocidad()<-100){
+									unLaser.gira(-20);
+	
+								}
+	
+								//lo añadimos al arrayList de lasers
+								misLasers.add(unLaser);
 								
+								paneljuego.repaint();
+	
 							}
-
-
-						}
+							for(i=0;i<misLasers.size();i++){
+								misLasers.get(i).mueve(0.040);
+								if (misLasers.get(i).getPosY() < -logicaFotoMiNave.TAMAÑO/2 || misLasers.get(i).getPosY()>paneljuego.getHeight()-logicaFotoLaser.TAMAÑO/2 ) {
+									paneljuego.remove(misLasers.get(i).getFotoLaser());
+									misLasers.remove(i);
+									
+								}
+	
+	
+							}
+	
+							}
 						try {
 							hiloLaser.sleep(30);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						}
 						}
 
 					}

@@ -23,7 +23,9 @@ public class enemigoUno {
 
 	//logicas
 	public  logicaEnemigosConjunta unEnemigo;
-	ArrayList<logicaEnemigosConjunta> misEnemigos = new ArrayList<logicaEnemigosConjunta>();	
+	ArrayList<logicaEnemigosConjunta> misEnemigos = new ArrayList<logicaEnemigosConjunta>();
+	public  logicaEnemigosConjunta muerte;
+	ArrayList<logicaEnemigosConjunta> misMuertes = new ArrayList<logicaEnemigosConjunta>();	
 	int tipoEnemigo=1;
 	int velocidadEstandar=-50;
 	int tiempoCreacion=2000;
@@ -54,8 +56,10 @@ public class enemigoUno {
 		//lanzamos el hilo de choques
 		hiloChoques choqueConLaser = new hiloChoques(); 
 		choqueConLaser.start();
-
-		//creamos los corazones
+		
+		//lanzamos el hilo de las muees reli
+		hiloMovimientoMuertes moverMuerte = new hiloMovimientoMuertes(); 
+		moverMuerte.start();
 
 	}
 	public int getTamañoArray(){
@@ -75,8 +79,10 @@ public class enemigoUno {
 					unEnemigo.setPosX((int)(Math.random()*((limiteIzquierdo)-limiteDerecho+1)+limiteDerecho));
 					//la posicion de las y es el alto del panel
 					unEnemigo.setPosY(ventanaGame.paneljuego.HEIGHT);
+					
 					//lo metemos en el array de enmigos
 					misEnemigos.add(unEnemigo);
+
 
 					//lo sacmos en el panel de juego
 					if(unEnemigo!=null){
@@ -94,14 +100,13 @@ public class enemigoUno {
 						tiempoCreacion-=25;
 					}
 
-
-					try {
-						//cada cuanto tiempo los va creando
-						Thread.sleep(tiempoCreacion);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+				}
+				try {
+					//cada cuanto tiempo los va creando
+					Thread.sleep(tiempoCreacion);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 		}
@@ -216,6 +221,13 @@ public class enemigoUno {
 							Area areaLaser = new Area(ventanaGame.misLasers.get(z).getFotoLaser().miArea );
 							if(areaEnemigo.intersects(areaLaser.getBounds2D())){
 								ventanaGame.paneljuego.remove(misEnemigos.get(i).getFotoEnemigo());
+								
+								muerte= new logicaEnemigosConjunta(5);
+								muerte.setPosX(misEnemigos.get(i).getPosX());
+								muerte.setPosY(misEnemigos.get(i).getPosY());
+								misMuertes.add(muerte);
+								ventanaGame.paneljuego.add(muerte.getFotoEnemigo());
+								
 								misEnemigos.remove(i);
 								//contamos enemigos muertos
 								ventanaStart.contenedor.setEnemigosNMuertos1(ventanaStart.contenedor.getEnemigosNMuertos1()+1);
@@ -230,16 +242,47 @@ public class enemigoUno {
 
 						}
 					}
-					try {
-						hiloChoques.sleep(10);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					
+				}
+				try {
+					hiloChoques.sleep(10);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 
 			}
 		}
 	}
 
+	public class hiloMovimientoMuertes extends Thread{
+		int i;
+		public void run(){
+			while(ventanaGame.vida>0&&(funcionar)){
+				if(ventanaGame.pausar==true && ventanaGame.corazon!=null){
+					//les damos movimiento
+					for(i=0;i<misMuertes.size();i++){
+						//	misEnemigos.get(i).gira(10);
+						misMuertes.get(i).setSuVelocidad(-1*(velocidadEstandar-20));
+						misMuertes.get(i).mueve(0.040, misMuertes.get(i).getGiro());
+						ventanaGame.paneljuego.repaint();
+					}
+					
+					//miramos si pasan la frontera superior
+					for(i=0;i<misMuertes.size();i++){
+						if(misMuertes.get(i).getPosY()<0){
+							ventanaGame.paneljuego.remove(misMuertes.get(i).getFotoEnemigo());
+							misMuertes.remove(i);
+						}
+					}
+				}
+				try {
+					hiloMovimientoMuertes.sleep(30);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 }

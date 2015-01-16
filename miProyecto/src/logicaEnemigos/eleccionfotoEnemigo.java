@@ -61,6 +61,9 @@ public class eleccionfotoEnemigo extends JLabel {
 		if(tipoEnemigo==4){
 			rutafoto="bin\\logicaEnemigos\\EnemigoCuatro.png";	
 		}
+		if(tipoEnemigo==5){
+			rutafoto="bin\\logicaEnemigos\\calabera.png";	
+		}
 		return rutafoto;
 	}
 	public void setPosiciones(int posicionX, int posicionY){
