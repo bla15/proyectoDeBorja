@@ -54,7 +54,7 @@ public class resumen implements  ActionListener {
 	private JPanel panelLider;
 	private JButton bSalir;
 	private JButton bPantallaStart;
-	private JLabel label_1;
+	private JLabel labelNombreLider;
 	private JTable tableEnemigos;
 	private JScrollPane scrollPaneEnemigosMuertos;
 	private JTable tableEnemigosMuertos;
@@ -73,6 +73,18 @@ public class resumen implements  ActionListener {
 	private JPanel panelTiempoyResultado;
 	private JLabel puntos;
 	private JLabel tiempo;
+	private JLabel lblTotalEnemigosMuertos;
+	private JLabel labelTotalM;
+	private JLabel lblTotalEnemigosQue;
+	private JLabel labelTotalPasan1;
+	private JLabel lblTotalEnemigosQue_1;
+	private JLabel labelTotalPasan2;
+	private JLabel lblRebotesTotalesEfectuados;
+	private JLabel labelToalRebotes;
+	private JPanel panelDatosLider;
+	private JLabel lblEficaciaDelLider;
+	private JLabel labelEficacia;
+
 	/**
 	 * Launch the application.
 	 */
@@ -428,14 +440,116 @@ public class resumen implements  ActionListener {
 		LabelTituloLider.setBounds(158, 29, 293, 35);
 		panelLider.add(LabelTituloLider);
 		
-		label_1 = new JLabel("New label");
-		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setForeground(Color.WHITE);
-		label_1.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-		label_1.setBounds(195, 75, 159, 23);
-		panelLider.add(label_1);
-	}
+		labelNombreLider = new JLabel();
+		labelNombreLider.setHorizontalAlignment(SwingConstants.CENTER);
+		labelNombreLider.setForeground(Color.WHITE);
+		labelNombreLider.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		labelNombreLider.setBounds(195, 75, 159, 23);
+		panelLider.add(labelNombreLider);
+		
+		panelDatosLider = new JPanel();
+		panelDatosLider.setBorder(new LineBorder(Color.GREEN, 3));
+		panelDatosLider.setBounds(20, 167, 416, 217);
+		panelDatosLider.setOpaque(false);
+		panelLider.add(panelDatosLider);
+		panelDatosLider.setLayout(null);
+		
+		lblRebotesTotalesEfectuados = new JLabel();
+		lblRebotesTotalesEfectuados.setBounds(10, 123, 226, 24);
+		panelDatosLider.add(lblRebotesTotalesEfectuados);
+		lblRebotesTotalesEfectuados.setText("Rebotes totales efectuados:\r\n");
+		lblRebotesTotalesEfectuados.setHorizontalAlignment(SwingConstants.LEFT);
+		lblRebotesTotalesEfectuados.setForeground(Color.YELLOW);
+		lblRebotesTotalesEfectuados.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		
+		labelToalRebotes = new JLabel();
+		labelToalRebotes.setBounds(246, 124, 63, 23);
+		panelDatosLider.add(labelToalRebotes);
+		labelToalRebotes.setHorizontalAlignment(SwingConstants.CENTER);
+		labelToalRebotes.setForeground(Color.GREEN);
+		labelToalRebotes.setFont(new Font("Impact", Font.BOLD | Font.ITALIC, 20));
+		
+		lblTotalEnemigosQue_1 = new JLabel();
+		lblTotalEnemigosQue_1.setBounds(10, 93, 324, 23);
+		panelDatosLider.add(lblTotalEnemigosQue_1);
+		lblTotalEnemigosQue_1.setText("Total enemigos2 que pasan frontera:\r\n");
+		lblTotalEnemigosQue_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTotalEnemigosQue_1.setForeground(Color.YELLOW);
+		lblTotalEnemigosQue_1.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		
+		labelTotalPasan2 = new JLabel();
+		labelTotalPasan2.setBounds(343, 93, 63, 23);
+		panelDatosLider.add(labelTotalPasan2);
+		labelTotalPasan2.setHorizontalAlignment(SwingConstants.CENTER);
+		labelTotalPasan2.setForeground(Color.GREEN);
+		labelTotalPasan2.setFont(new Font("Impact", Font.BOLD | Font.ITALIC, 20));
+		
+		lblTotalEnemigosQue = new JLabel();
+		lblTotalEnemigosQue.setBounds(10, 73, 324, 23);
+		panelDatosLider.add(lblTotalEnemigosQue);
+		lblTotalEnemigosQue.setText("Total enemigos1 que pasan frontera:\r\n");
+		lblTotalEnemigosQue.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTotalEnemigosQue.setForeground(Color.YELLOW);
+		lblTotalEnemigosQue.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		
+		labelTotalPasan1 = new JLabel();
+		labelTotalPasan1.setBounds(344, 73, 63, 23);
+		panelDatosLider.add(labelTotalPasan1);
+		labelTotalPasan1.setHorizontalAlignment(SwingConstants.CENTER);
+		labelTotalPasan1.setForeground(Color.GREEN);
+		labelTotalPasan1.setFont(new Font("Impact", Font.BOLD | Font.ITALIC, 20));
+		
+		lblTotalEnemigosMuertos = new JLabel();
+		lblTotalEnemigosMuertos.setBounds(10, 39, 229, 23);
+		panelDatosLider.add(lblTotalEnemigosMuertos);
+		lblTotalEnemigosMuertos.setText("Total enemigos muertos:");
+		lblTotalEnemigosMuertos.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTotalEnemigosMuertos.setForeground(Color.YELLOW);
+		lblTotalEnemigosMuertos.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		
+		labelTotalM = new JLabel();
+		labelTotalM.setBounds(234, 39, 63, 23);
+		panelDatosLider.add(labelTotalM);
+		labelTotalM.setHorizontalAlignment(SwingConstants.CENTER);
+		labelTotalM.setForeground(Color.GREEN);
+		labelTotalM.setFont(new Font("Impact", Font.BOLD | Font.ITALIC, 20));
+		
+		lblEficaciaDelLider = new JLabel();
+		lblEficaciaDelLider.setText("Eficacia del lider:");
+		lblEficaciaDelLider.setHorizontalAlignment(SwingConstants.LEFT);
+		lblEficaciaDelLider.setForeground(Color.YELLOW);
+		lblEficaciaDelLider.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		lblEficaciaDelLider.setBounds(10, 161, 156, 24);
+		panelDatosLider.add(lblEficaciaDelLider);
+		
+		labelEficacia = new JLabel();
+		labelEficacia.setHorizontalAlignment(SwingConstants.CENTER);
+		labelEficacia.setForeground(Color.GREEN);
+		labelEficacia.setFont(new Font("Impact", Font.BOLD | Font.ITALIC, 20));
+		labelEficacia.setBounds(176, 162, 63, 23);
+		panelDatosLider.add(labelEficacia);
 
+		//rellenamos los datos de los paneles
+		if(ventanaStart.mejoresPilotos.size()!=0){
+			labelNombreLider.setText(ventanaStart.mejoresPilotos.get(0).getNombre());
+			labelTotalM.setText(Integer.toString(ventanaStart.mejoresPilotos.get(0).getEnemigosNMuertos1()+ventanaStart.mejoresPilotos.get(0).getEnemigosNMuertos2()+ventanaStart.mejoresPilotos.get(0).getEnemigosNMuertos3()));
+			labelTotalPasan1.setText(Integer.toString(ventanaStart.mejoresPilotos.get(0).getEnemigoPasa1()));
+			labelTotalPasan2.setText(Integer.toString(ventanaStart.mejoresPilotos.get(0).getEnemigoPasa2()));
+			labelToalRebotes.setText(Integer.toString(ventanaStart.mejoresPilotos.get(0).getRebotesIzquierdos()+ventanaStart.mejoresPilotos.get(0).getRebotesDerechos()));
+			labelEficacia.setText(ventanaStart.mejoresPilotos.get(0).eficiencia());
+			
+		}else{
+			labelNombreLider.setText("NULL");
+			labelTotalM.setText("NULL");
+			labelTotalPasan1.setText("NULL");
+			labelTotalPasan2.setText("NULL");
+			labelToalRebotes.setText("NULL");
+			labelEficacia.setText("NULL");
+		}
+		
+
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -449,6 +563,7 @@ public class resumen implements  ActionListener {
 				if(ventanaStart.guardar==true){
 					//guardamos en la base de datos
 					baseDatos.insertarPiloto(ventanaStart.contenedor.getNombre(), ventanaStart.contenedor.getPuntuacion());
+					
 					ObjectOutputStream oos = new ObjectOutputStream( new FileOutputStream(path) );
 					oos.writeObject( ventanaStart.mejoresPilotos);
 					oos.close();

@@ -30,6 +30,7 @@ import javax.swing.ImageIcon;
 import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
 import JOptionPaneles.opciones;
 import presentaciones.presentacion0;
+import javax.swing.SwingConstants;
 
 public class ventanaStart  implements KeyListener, ActionListener{
 
@@ -152,7 +153,7 @@ public class ventanaStart  implements KeyListener, ActionListener{
 		guardar=true;
 		//cargamos los mejores pilotos
 		cargar();
-		
+		ordenar();
 		initialize();
 		
 		//Descargamos la informacion del properties
@@ -192,7 +193,7 @@ public class ventanaStart  implements KeyListener, ActionListener{
 
 	public void ordenar(){
 		
-		
+		Collections.sort(mejoresPilotos, logicaPiloto.puntuacionComparador);
 	}
 	
 
@@ -270,6 +271,7 @@ public class ventanaStart  implements KeyListener, ActionListener{
 		panelInicioFondo.add(JlabelNombreCreadores);
 		
 		tituloPuntuaciones = new JLabel("Puntuaciones");
+		tituloPuntuaciones.setHorizontalAlignment(SwingConstants.CENTER);
 		tituloPuntuaciones.setForeground(Color.RED);
 		tituloPuntuaciones.setFont(new Font("Stencil", Font.BOLD, tamañoLetraTituloPuntuaciones));
 		tituloPuntuaciones.setBorder(new LineBorder(Color.RED, tamañoBorde));

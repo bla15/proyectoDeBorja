@@ -2,8 +2,7 @@ package logica;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
-
-
+import java.util.Comparator;
 
 public class logicaPiloto implements Serializable{
 	
@@ -148,8 +147,6 @@ public class logicaPiloto implements Serializable{
 	public void setRebotesDerechos(int rebotesDerechos) {
 		this.rebotesDerechos = rebotesDerechos;
 	}
-	
-
 	@Override
 	public boolean equals(Object obj) {  
 		//Dos pilotos son iguales si tienen la misma putuacion
@@ -157,5 +154,14 @@ public class logicaPiloto implements Serializable{
 		logicaPiloto est2 = (logicaPiloto) obj;
 		return (getPuntuacion()==(est2.getPuntuacion()));
 	}
+	
+	public static Comparator<logicaPiloto> puntuacionComparador = new Comparator<logicaPiloto>() {
+
+		public int compare(logicaPiloto p1, logicaPiloto p2) {
+			  int puntuacion1 = p1.getPuntuacion();
+			  int puntuacion2 = p2.getPuntuacion();
+			return puntuacion2-puntuacion1;
+			
+		}};
 
 }
