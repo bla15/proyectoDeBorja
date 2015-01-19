@@ -49,9 +49,7 @@ public class ventanaRegistro implements KeyListener, ActionListener {
 	JLabel tituloPuntucaciones;
 	JButton bContinuar; 
 	
-	//ponemos el properties
-	private java.util.Properties miConfiguracion;
-
+	
 	//tamaño del frame por defecto
 	int anchoFrame=450;
 	int altoFrame=300;
@@ -107,7 +105,11 @@ public class ventanaRegistro implements KeyListener, ActionListener {
 		String nombrePiloto="Identificacion requerida, introduce tu nombre y procede a montar en tu nave. Gracias por tu colaboracion.";
 		private JScrollPane scrollPanedeList;
 		private JList list;
+		
+		String rutaNave;
 
+		//ponemos el properties
+		private java.util.Properties miConfiguracion;
 	/**
 	 * Launch the application.
 	 */
@@ -129,6 +131,7 @@ public class ventanaRegistro implements KeyListener, ActionListener {
 	 * Create the application.
 	 */
 	public ventanaRegistro() {
+		this.rutaNave=rutaNave;
 		
 		lmName = new DefaultListModel();
 		
@@ -136,11 +139,11 @@ public class ventanaRegistro implements KeyListener, ActionListener {
 		
 		//Descargamos la informacion del properties
 		miConfiguracion = new Properties();
-		
 		try {
 			miConfiguracion.loadFromXML( new FileInputStream( new java.io.File("nombrePiloto.ini") ) );
-			nombrePiloto = miConfiguracion.getProperty( "NOMBRE" );
+			nombrePiloto = miConfiguracion.getProperty( "NOMBRE" );;
 			txtPonAquiTu.setText(nombrePiloto);
+			System.out.println(ventanaStart.rutaNave);
 			
 		}catch (Exception e) { 
 			System.out.println("No se ha podido cargar bien el fichero");
@@ -251,6 +254,8 @@ public class ventanaRegistro implements KeyListener, ActionListener {
 				miConfiguracion = new Properties();
 				try {
 					miConfiguracion.setProperty("NOMBRE",txtPonAquiTu.getText());
+					miConfiguracion.setProperty("NAVE",ventanaStart.rutaNave);
+					miConfiguracion.setProperty("LASER",ventanaStart.rutaLaser);
 					miConfiguracion.storeToXML( new FileOutputStream( new java.io.File("nombrePiloto.ini") ), "Nombre del piloto" );
 				}catch (Exception ex) { 
 					System.out.println("Fallo en el guardado del properties");

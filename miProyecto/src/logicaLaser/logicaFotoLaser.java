@@ -15,6 +15,8 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import ventanas.ventanaStart;
+
 
 public class logicaFotoLaser extends JLabel {
 	//El tamaño de la nave
@@ -34,7 +36,7 @@ public class logicaFotoLaser extends JLabel {
 		BufferedImage imgagenPrimitiva = null;//CReamos una BufferedImage de nombre "img" , con la cual se lee el archivo donde esta la imagen
 		//Hacemos el try cathc por si no en cuentra el fichero
 				try {
-					imgagenPrimitiva = ImageIO.read(new File("bin\\logicaLaser\\laser.png"));
+					imgagenPrimitiva = ImageIO.read(new File(ventanaStart.rutaLaser));
 				} catch (IOException e) {
 					System.err.print("No se ha podido cargar bien la imagen");
 				    e.printStackTrace();

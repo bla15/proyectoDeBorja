@@ -37,6 +37,7 @@ public class presentacion0 implements KeyListener, ActionListener{
 	private JTextPane txtpnEstasAPunto;
 	private JLabel lblNewLabel;
 	private JButton bContinuar;
+	String rutaNave;
 	/**
 	 * Launch the application.
 	 */
@@ -58,6 +59,7 @@ public class presentacion0 implements KeyListener, ActionListener{
 	 * Create the application.
 	 */
 	public presentacion0() {
+		this.rutaNave=rutaNave;
 		cartel = new logicaMapa();
 		cartel.setLocation(450, 10);
 		

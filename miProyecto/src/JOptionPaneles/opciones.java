@@ -113,7 +113,32 @@ public class opciones implements  ActionListener{
 		if (e.getSource()==btnExit) {
 			this.window.frame.dispose();
 		}
-		
+		if (e.getSource()==btnMusica) {
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try { 	
+						opcionesMusica.window = new opcionesMusica();
+						opcionesMusica.window.frame.setVisible(true);
+											
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		}
+		if (e.getSource()==btnGraficos) {
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try { 	
+						opcionesGraficas.window = new opcionesGraficas();
+						opcionesGraficas.window.frame.setVisible(true);
+											
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		}
 	}
 	
 }

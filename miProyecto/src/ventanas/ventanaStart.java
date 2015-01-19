@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -118,6 +119,13 @@ public class ventanaStart  implements KeyListener, ActionListener{
 	private JLabel marcoPuntucionesJlabel;
 	private JButton bOptions;
 	
+	public static String rutaNave;
+	public static String rutaLaser;
+	
+	//ponemos el properties
+	private java.util.Properties miConfiguracion;
+
+	
 
 	/**
 	 * Launch the application.
@@ -140,12 +148,25 @@ public class ventanaStart  implements KeyListener, ActionListener{
 	 * Create the application.
 	 */
 	public ventanaStart() {
-		
+		rutaNave="bin\\logica\\nave1.png";
+		rutaLaser="bin\\logicaLaser\\laser.png";
 		guardar=true;
 		//cargamos los mejores pilotos
 		cargar();
 		
 		initialize();
+		
+		//Descargamos la informacion del properties
+				miConfiguracion = new Properties();
+				try {
+					miConfiguracion.loadFromXML( new FileInputStream( new java.io.File("nombrePiloto.ini") ) );
+					ventanaStart.rutaNave=miConfiguracion.getProperty("NAVE");
+					ventanaStart.rutaLaser=miConfiguracion.getProperty("LASER");
+					System.out.println(ventanaStart.rutaNave);
+					
+				}catch (Exception e) { 
+					System.out.println("No se ha podido cargar bien el fichero");
+				}
 		
 	}
 

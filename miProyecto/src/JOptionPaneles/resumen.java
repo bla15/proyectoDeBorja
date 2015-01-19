@@ -440,8 +440,6 @@ public class resumen implements  ActionListener {
 		// TODO Auto-generated method stub
 		if (e.getSource()==bSalir) {
 			
-			System.out.println(ventanaStart.mejoresPilotos.size());
-			
 			//guardamos el has-set con sus cambios
 			File path= new File("src/ventanas/mejoresJugadores.dat");
 		
