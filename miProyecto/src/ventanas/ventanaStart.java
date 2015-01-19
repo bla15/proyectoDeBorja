@@ -19,18 +19,15 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Properties;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.border.LineBorder;
-
+import logica.baseDatos;
 import logica.logicaPiloto;
 import fondos.logicaFondos;
-
 import javax.swing.ImageIcon;
 import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
-
 import JOptionPaneles.opciones;
 import presentaciones.presentacion0;
 
@@ -142,12 +139,14 @@ public class ventanaStart  implements KeyListener, ActionListener{
 			}
 			
 		});
+		
 	}
 
 	/**
 	 * Create the application.
 	 */
 	public ventanaStart() {
+		baseDatos.conexion();
 		rutaNave="bin\\logica\\nave1.png";
 		rutaLaser="bin\\logicaLaser\\laser.png";
 		guardar=true;
@@ -162,7 +161,6 @@ public class ventanaStart  implements KeyListener, ActionListener{
 					miConfiguracion.loadFromXML( new FileInputStream( new java.io.File("nombrePiloto.ini") ) );
 					ventanaStart.rutaNave=miConfiguracion.getProperty("NAVE");
 					ventanaStart.rutaLaser=miConfiguracion.getProperty("LASER");
-					System.out.println(ventanaStart.rutaNave);
 					
 				}catch (Exception e) { 
 					System.out.println("No se ha podido cargar bien el fichero");
@@ -331,6 +329,7 @@ public class ventanaStart  implements KeyListener, ActionListener{
 						contenedor = new logicaPiloto();   	
 						ventanaRegistro.window = new ventanaRegistro();
 						ventanaRegistro.window.frame.setVisible(true);
+						
 											
 					} catch (Exception e) {
 						e.printStackTrace();

@@ -143,7 +143,6 @@ public class ventanaRegistro implements KeyListener, ActionListener {
 			miConfiguracion.loadFromXML( new FileInputStream( new java.io.File("nombrePiloto.ini") ) );
 			nombrePiloto = miConfiguracion.getProperty( "NOMBRE" );;
 			txtPonAquiTu.setText(nombrePiloto);
-			System.out.println(ventanaStart.rutaNave);
 			
 		}catch (Exception e) { 
 			System.out.println("No se ha podido cargar bien el fichero");

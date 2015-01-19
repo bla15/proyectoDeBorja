@@ -30,6 +30,7 @@ import javax.swing.JLabel;
 
 
 
+
 import ventanas.ventanaGame;
 import ventanas.ventanaRegistro;
 import ventanas.ventanaStart;
@@ -45,6 +46,7 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.SwingConstants;
 
+import logica.baseDatos;
 import logica.logicaCambio;
 
 public class gameOver implements KeyListener, ActionListener{
@@ -179,6 +181,7 @@ public class gameOver implements KeyListener, ActionListener{
 			ventanaGame.window.frame.dispose();
 			
 		}else if(botonPulsado.getSource()==botonAdelante){
+			baseDatos.finConexion();
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {

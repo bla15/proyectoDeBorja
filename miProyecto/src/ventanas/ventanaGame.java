@@ -8,6 +8,7 @@ import java.awt.Panel;
 
 import javax.swing.JFrame;
 
+import logica.baseDatos;
 import logica.logicaCambio;
 import logica.logicaCoheteDerecho;
 import logica.logicaCoheteIzquierdo;
@@ -276,6 +277,7 @@ public class ventanaGame implements KeyListener, ActionListener {
 		//si le damos a play ponemos el foco y el juego vuelve a funcionr
 		
 		if(e.getSource()==bSalir){
+			baseDatos.finConexion();
 			System.exit( 0 ); 
 		}
 		if(e.getSource()==bPause){

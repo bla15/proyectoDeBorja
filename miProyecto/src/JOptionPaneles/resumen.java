@@ -32,6 +32,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 
+import logica.baseDatos;
 import logica.logicaPiloto;
 
 import javax.swing.JTable;
@@ -446,6 +447,8 @@ public class resumen implements  ActionListener {
 			try {
 				
 				if(ventanaStart.guardar==true){
+					//guardamos en la base de datos
+					baseDatos.insertarPiloto(ventanaStart.contenedor.getNombre(), ventanaStart.contenedor.getPuntuacion());
 					ObjectOutputStream oos = new ObjectOutputStream( new FileOutputStream(path) );
 					oos.writeObject( ventanaStart.mejoresPilotos);
 					oos.close();
@@ -464,10 +467,11 @@ public class resumen implements  ActionListener {
 						path + " no ha podido salvarse.", "Fichero incorrecto", JOptionPane.ERROR_MESSAGE );
 			}
 			
-			
+			baseDatos.finConexion();
 			System.exit( 0 ); 
 		}
 		if (e.getSource()==bPantallaStart) {
+			baseDatos.finConexion();
 			
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
